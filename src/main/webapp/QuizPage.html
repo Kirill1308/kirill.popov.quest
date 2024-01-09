@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quest Form</title>
+
+    <style>
+        body {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        form {
+            background-color: #3498db;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 300px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #ecf0f1;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        input[type="radio"] {
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"] {
+            background-color: #e74c3c;
+            color: #ecf0f1;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #c0392b;
+        }
+    </style>
+
+</head>
+<body>
+
+<form action="QuizServlet" method="post">
+    <h2>Embark on the Quest!</h2>
+
+    <label for="choice1">${question.getQuestion}</label>
+    <input type="radio" id="choice1" name="choice" value="option1"> ${question.getOption1} <br>
+
+    <label for="choice2"></label>
+    <input type="radio" id="choice2" name="choice" value="option2"> ${question.getOption2} <br>
+
+    <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>
