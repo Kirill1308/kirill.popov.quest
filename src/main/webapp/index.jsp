@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Welcome</title>
@@ -6,7 +7,7 @@
 <body>
 <h1>Welcome to the Quiz</h1>
 <p>Click the button below to start the quiz</p>
-<form action="QuizPage.jsp">
+<form action="QuizServlet">
     <input type="submit" value="Start Quiz">
 </form>
 

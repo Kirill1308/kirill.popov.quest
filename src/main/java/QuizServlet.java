@@ -1,4 +1,5 @@
 import io.JSONQuestionReader;
+import manager.QuizManager;
 import model.Question;
 
 import javax.servlet.RequestDispatcher;
@@ -15,6 +16,10 @@ import java.util.List;
 public class QuizServlet extends HttpServlet {
     private final JSONQuestionReader jsonQuestionReader = new JSONQuestionReader();
 
+    public QuizServlet() {
+
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
@@ -30,27 +35,26 @@ public class QuizServlet extends HttpServlet {
 
         int currentQuestionIndex = (int) session.getAttribute("currentQuestionIndex");
 
-        if (currentQuestionIndex < 0 || currentQuestionIndex >= questions.size()) {
+        QuizManager quizManager = new QuizManager(questions);
+        Question question = quizManager.getQuestion(currentQuestionIndex);
+
+        if (question != null) {
+            session.setAttribute("currentQuestionIndex", currentQuestionIndex + 1);
+            request.setAttribute("question", question);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("QuizPage.jsp");
+            dispatcher.forward(request, response);
+        } else {
             RequestDispatcher dispatcher = request.getRequestDispatcher("QuizFinished.jsp");
             dispatcher.forward(request, response);
         }
-        Question question = questions.get(currentQuestionIndex);
-
-        session.setAttribute("currentQuestionIndex", currentQuestionIndex + 1);
-
-        request.setAttribute("question", question);
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("QuizPage.jsp");
-        dispatcher.forward(request, response);
     }
-
-
-    // TODO: 1. Add doPost method
-    // TODO: 2. Add QuizManager class
-    // TODO: 3. Add QuizManager instance to QuizServlet
-    // TODO: 4. Add method to QuizManager to check answer
-    // TODO: 5. Add method to QuizManager to get next question
-    // TODO: 6. Add method to QuizManager to get previous question
-
 }
+
+
+// TODO: 1. Add doPost method
+// TODO: 2. Add QuizManager class
+// TODO: 3. Add QuizManager instance to QuizServlet
+// TODO: 4. Add method to QuizManager to check answer
+// TODO: 5. Add method to QuizManager to get next question
+// TODO: 6. Add method to QuizManager to get previous question
 
