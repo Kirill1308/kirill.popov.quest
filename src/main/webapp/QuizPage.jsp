@@ -1,3 +1,5 @@
+<%@ page import="model.Question" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,18 +60,40 @@
 
 </head>
 <body>
+<form action="QuizServlet">
+    <%
+        Question question = (Question) request.getAttribute("question");
+        String questionText = "";
+        String option1 = "";
+        String option2 = "";
+        String questionId = "";
 
-<form action="QuizServlet" method="post">
-    <h2>Embark on the Quest!</h2>
+        if (question != null) {
+            questionId = question.getId();
+            questionText = question.getQuestion();
+            option1 = question.getOption1();
+            option2 = question.getOption2();
+        }
+    %>
 
-    <label for="choice1">${question.getQuestion}</label>
-    <input type="radio" id="choice1" name="choice" value="option1"> ${question.getOption1} <br>
+    <h3>
+        Question <%=questionId%><br>
+        <%=questionText%>
+    </h3>
 
-    <label for="choice2"></label>
-    <input type="radio" id="choice2" name="choice" value="option2"> ${question.getOption2} <br>
+    <label>
+        <input type="radio" name="answer" value="yes">
+        <%=option1%>
+    </label>
 
-    <input type="submit" value="Submit">
+    <label>
+        <input type="radio" name="answer" value="no">
+        <%=option2%>
+    </label>
+
+    <br>
+    <input type="submit" value="Submit Answer">
+
 </form>
-
 </body>
 </html>

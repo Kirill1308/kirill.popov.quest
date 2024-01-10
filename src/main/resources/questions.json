@@ -1,25 +1,24 @@
-{
-  "questions": [
-    {
-      "id": 1,
-      "text": "Does a cat have four legs?",
-      "option1": "yes",
-      "option2": "no",
-      "answer": "yes"
-    },
-    {
-      "id": 2,
-      "text": "In chess, can a knight move in the 'letter G' pattern?",
-      "option1": "yes",
-      "option2": "no",
-      "answer": "yes"
-    },
-    {
-      "id": 3,
-      "text": "Does a rose have thorns?",
-      "option1": "yes",
-      "option2": "no",
-      "answer": "yes"
-    }
-  ]
-}
+[
+  {
+    "id": 1,
+    "question": "Does a cat have four legs?",
+    "option1": "yes",
+    "option2": "no",
+    "answer": "yes"
+  },
+  {
+    "id": 2,
+    "question": "Does a dog have four legs?",
+    "option1": "yes",
+    "option2": "no",
+    "answer": "yes"
+  },
+  {
+    "id": 3,
+    "question": "Does a bird have four legs?",
+    "option1": "yes",
+    "option2": "no",
+    "answer": "no"
+  }
+]
+

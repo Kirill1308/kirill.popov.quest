@@ -6,7 +6,7 @@
 <body>
 <h1>Welcome to the Quiz</h1>
 <p>Click the button below to start the quiz</p>
-<form action="QuizPage.html">
+<form action="QuizPage.jsp">
     <input type="submit" value="Start Quiz">
 </form>
 

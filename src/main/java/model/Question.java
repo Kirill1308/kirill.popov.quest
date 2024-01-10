@@ -17,4 +17,15 @@ public class Question {
         this.option2 = option2;
         this.answer = answer;
     }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id='" + id + '\'' +
+                ", question='" + question + '\'' +
+                ", option1='" + option1 + '\'' +
+                ", option2='" + option2 + '\'' +
+                ", answer='" + answer + '\'' +
+                '}';
+    }
 }
