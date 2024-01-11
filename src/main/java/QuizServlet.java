@@ -6,7 +6,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import manager.QuizManager;
+import service.QuestionService;
+import service.QuizManager;
 import model.Question;
 
 import java.io.IOException;
@@ -14,7 +15,9 @@ import java.util.List;
 
 @WebServlet("/quiz")
 public class QuizServlet extends HttpServlet {
-    private final JSONQuestionReader jsonQuestionReader = new JSONQuestionReader();
+//    private final JSONQuestionReader jsonQuestionReader = new JSONQuestionReader();
+
+    private final QuestionService questionService = ApplicationContext.getInstanceOf(QuestionService.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -22,6 +25,8 @@ public class QuizServlet extends HttpServlet {
 
         @SuppressWarnings("unchecked")
         List<Question> questions = (List<Question>) session.getAttribute("questions");
+
+
 
         if (questions == null || questions.isEmpty()) {
             questions = jsonQuestionReader.readQuestionsFromJSON();
