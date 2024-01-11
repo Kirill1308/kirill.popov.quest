@@ -60,7 +60,7 @@
 
 </head>
 <body>
-<form action="QuizServlet">
+<form action="quiz">
     <%
         Question question = (Question) request.getAttribute("question");
         String questionText = "";

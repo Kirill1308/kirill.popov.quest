@@ -1,24 +1,20 @@
 import io.JSONQuestionReader;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import manager.QuizManager;
 import model.Question;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/QuizServlet")
+@WebServlet("/quiz")
 public class QuizServlet extends HttpServlet {
     private final JSONQuestionReader jsonQuestionReader = new JSONQuestionReader();
-
-    public QuizServlet() {
-
-    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -51,10 +47,4 @@ public class QuizServlet extends HttpServlet {
 }
 
 
-// TODO: 1. Add doPost method
-// TODO: 2. Add QuizManager class
-// TODO: 3. Add QuizManager instance to QuizServlet
-// TODO: 4. Add method to QuizManager to check answer
-// TODO: 5. Add method to QuizManager to get next question
-// TODO: 6. Add method to QuizManager to get previous question
 
