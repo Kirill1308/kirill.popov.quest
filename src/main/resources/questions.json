@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "question": "Does a cat have four legs?",
+    "option1": "yes",
+    "option2": "no",
+    "answer": "yes"
+  },
+  {
+    "id": 2,
+    "question": "Does a dog have four legs?",
+    "option1": "yes",
+    "option2": "no",
+    "answer": "yes"
+  },
+  {
+    "id": 3,
+    "question": "Does a bird have four legs?",
+    "option1": "yes",
+    "option2": "no",
+    "answer": "no"
+  }
+]
+

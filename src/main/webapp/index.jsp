@@ -1,5 +1,17 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+</head>
 <body>
-<h2>Hello World!</h2>
+<h1>Welcome to the Quiz</h1>
+<p>Click the button below to start the quiz</p>
+<form action="quiz" method="get">
+    <input type="submit" value="Start Quiz">
+</form>
+
+<h2>Description:</h2>
+<p>This is description of the Quiz</p>
 </body>
 </html>
