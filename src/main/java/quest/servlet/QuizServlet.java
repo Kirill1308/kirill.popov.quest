@@ -1,4 +1,6 @@
-import io.JSONQuestionReader;
+package quest.servlet;
+
+import quest.io.JSONQuestionReader;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -6,8 +8,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import manager.QuizManager;
-import model.Question;
+import quest.manager.QuizManager;
+import quest.model.Question;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.List;
 @WebServlet("/quiz")
 public class QuizServlet extends HttpServlet {
     private final JSONQuestionReader jsonQuestionReader = new JSONQuestionReader();
+    private final QuizManager quizManager = new QuizManager();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -30,21 +33,16 @@ public class QuizServlet extends HttpServlet {
         }
 
         int currentQuestionIndex = (int) session.getAttribute("currentQuestionIndex");
-
-        QuizManager quizManager = new QuizManager(questions);
-        Question question = quizManager.getQuestion(currentQuestionIndex);
+        Question question = quizManager.getNextQuestion(session, currentQuestionIndex);
 
         if (question != null) {
-            session.setAttribute("currentQuestionIndex", currentQuestionIndex + 1);
             request.setAttribute("question", question);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("QuizPage.jsp");
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/quizPage.jsp");
             dispatcher.forward(request, response);
         } else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("QuizFinished.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/quizFinished.jsp");
             dispatcher.forward(request, response);
         }
     }
 }
-
-
-
