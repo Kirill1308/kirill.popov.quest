@@ -18,10 +18,10 @@
         String questionId = "";
 
         if (question != null) {
-            questionId = question.getId();
-            questionText = question.getText();
-            option1 = question.getOption1();
-            option2 = question.getOption2();
+            questionId = question.id();
+            questionText = question.text();
+            option1 = question.option1();
+            option2 = question.option2();
         }
     %>
 
