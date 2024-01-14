@@ -1,4 +1,12 @@
 package quest.model;
 
-public record Question(String id, String text, String option1, String option2, String answer) {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
+public final class Question {
+    private final int id;
+    private final String text;
+    private final String answer;
 }

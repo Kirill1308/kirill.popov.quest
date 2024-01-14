@@ -13,15 +13,11 @@
     <%
         Question question = (Question) request.getAttribute("question");
         String questionText = "";
-        String option1 = "";
-        String option2 = "";
-        String questionId = "";
+        int questionId = 0;
 
         if (question != null) {
-            questionId = question.id();
-            questionText = question.text();
-            option1 = question.option1();
-            option2 = question.option2();
+            questionId = question.getId();
+            questionText = question.getText();
         }
     %>
 
@@ -31,16 +27,10 @@
     </h3>
 
     <label class="answer-label">
-        <input type="radio" name="answer" value="yes" class="answer-radio">
-        <%=option1%>
-    </label>
+        <input type="radio" name="answer" value="yes" class="answer-radio"> yes
+        <input type="radio" name="answer" value="no" class="answer-radio"> no
+    </label><br>
 
-    <label class="answer-label">
-        <input type="radio" name="answer" value="no" class="answer-radio">
-        <%=option2%>
-    </label>
-
-    <br>
     <input type="submit" value="Submit Answer" class="submit-button">
 </form>
 </body>

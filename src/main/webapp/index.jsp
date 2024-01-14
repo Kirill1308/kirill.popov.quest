@@ -16,6 +16,4 @@
 <h2 class="quiz-subheading">Description:</h2>
 <p class="quiz-description">This is the description of the Quiz</p>
 </body>
-
-
 </html>
