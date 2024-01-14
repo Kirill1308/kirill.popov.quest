@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<form action="quiz" class="quiz-form">
+<form action="quiz" class="quiz-form" method="post">
     <%
         @SuppressWarnings("unchecked")
         Optional<Question> question = (Optional<Question>) request.getAttribute("question");

@@ -9,4 +9,6 @@ public interface QuestionRepository {
     List<Question> loadQuestionsFromJSON();
 
     Optional<Question> getQuestionById(int id);
+
+    Optional<String> getCorrectAnswerById(Integer currentQuestionId);
 }

@@ -36,4 +36,12 @@ public class JsonFileQuestionRepository implements QuestionRepository {
                 .filter(question -> question.getId() == id)
                 .findFirst();
     }
+
+    @Override
+    public Optional<String> getCorrectAnswerById(Integer currentQuestionId) {
+        return questions.stream()
+                .filter(question -> question.getId() == currentQuestionId)
+                .map(Question::getAnswer)
+                .findFirst();
+    }
 }
