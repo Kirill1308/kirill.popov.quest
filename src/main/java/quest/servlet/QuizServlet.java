@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import quest.checker.AnswerChecker;
+import quest.constant.QuizConstant;
 import quest.context.ApplicationContext;
 import quest.model.Question;
 import quest.repository.QuestionRepository;
@@ -14,16 +16,14 @@ import java.io.IOException;
 import java.util.Optional;
 
 import static java.util.Objects.isNull;
+import static quest.constant.QuizConstant.CURRENT_QUESTION_ID_ATTRIBUTE;
+import static quest.constant.QuizConstant.FIRST_QUESTION_ID;
+import static quest.constant.QuizConstant.QUIZ_FINISHED_JSP;
+import static quest.constant.QuizConstant.QUIZ_PAGE_JSP;
 
 @WebServlet("/quiz")
-
 public class QuizServlet extends HttpServlet {
     private static final QuestionRepository questionRepository = ApplicationContext.getInstanceOf(QuestionRepository.class);
-    public static final int FIRST_QUESTION_ID = 1;
-    public static final String QUIZ_PAGE_JSP = "jsp/quizPage.jsp";
-    public static final String QUIZ_FINISHED_JSP = "jsp/quizFinished.jsp";
-    public static final String FAIL_PAGE_JSP = "jsp/failPage.jsp";
-    public static final String CURRENT_QUESTION_ID_ATTRIBUTE = "currentQuestionId";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -52,7 +52,7 @@ public class QuizServlet extends HttpServlet {
         Optional<String> correctAnswer = questionRepository.getCorrectAnswerById(questionId);
         String submittedAnswer = request.getParameter("answer");
 
-        boolean isCorrect = correctAnswer.isPresent() && correctAnswer.get().equals(submittedAnswer);
+        boolean isCorrect = AnswerChecker.isAnswerCorrect(correctAnswer, submittedAnswer);
 
         if (isCorrect) {
             session.setAttribute(CURRENT_QUESTION_ID_ATTRIBUTE, questionId + 1);
@@ -61,7 +61,7 @@ public class QuizServlet extends HttpServlet {
             request.setAttribute("question", nextQuestion);
             request.getRequestDispatcher(QUIZ_PAGE_JSP).forward(request, response);
         } else {
-            request.getRequestDispatcher(FAIL_PAGE_JSP).forward(request, response);
+            request.getRequestDispatcher(QuizConstant.FAIL_PAGE_JSP).forward(request, response);
         }
     }
 }
