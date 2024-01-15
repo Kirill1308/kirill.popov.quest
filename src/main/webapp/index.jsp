@@ -1,19 +1,21 @@
-<!DOCTYPE>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style/index-page.css">
-    <title>Welcome to the Quiz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/index.css">
+    <title>User Login</title>
 </head>
 
 <body>
-<h1 class="quiz-heading">Welcome to the Quiz</h1>
-<p class="quiz-description">Click the button below to start the quiz</p>
-<form action="quiz" method="get" class="quiz-form">
-    <input type="submit" value="Start Quiz" class="start-quiz-button">
-</form>
+<form action="user" method="post" id="loginForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
 
-<h2 class="quiz-subheading">Description:</h2>
-<p class="quiz-description">This is the description of the Quiz</p>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+
+    <button type="submit">Login</button>
+</form>
 </body>
 </html>

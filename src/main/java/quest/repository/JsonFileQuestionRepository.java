@@ -20,8 +20,7 @@ public class JsonFileQuestionRepository implements QuestionRepository {
         this.questions = loadQuestionsFromJSON();
     }
 
-    @Override
-    public List<Question> loadQuestionsFromJSON() {
+    private List<Question> loadQuestionsFromJSON() {
         try (Reader reader = new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream(QUESTIONS_JSON)))) {
             return gson.fromJson(reader, new TypeToken<List<Question>>() {
             }.getType());
