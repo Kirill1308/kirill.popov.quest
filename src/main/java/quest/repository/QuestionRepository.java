@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface QuestionRepository {
     List<Question> loadQuestionsFromJSON();
 
-    Optional<Question> getQuestionById(int id);
+    Optional<Question> getQuestionById(Integer questionId);
 
-    Optional<String> getCorrectAnswerById(Integer currentQuestionId);
+    Optional<String> getCorrectAnswerById(Integer questionId);
 }

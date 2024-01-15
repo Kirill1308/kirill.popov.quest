@@ -29,10 +29,10 @@ public class QuizServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
 
-        Integer currentQuestionId = (Integer) session.getAttribute(CURRENT_QUESTION_ID_ATTRIBUTE);
-        currentQuestionId = (isNull(currentQuestionId)) ? FIRST_QUESTION_ID : currentQuestionId;
+        Integer questionId = (Integer) session.getAttribute(CURRENT_QUESTION_ID_ATTRIBUTE);
+        questionId = (isNull(questionId)) ? FIRST_QUESTION_ID : questionId;
 
-        Optional<Question> question = questionRepository.getQuestionById(currentQuestionId);
+        Optional<Question> question = questionRepository.getQuestionById(questionId);
         request.setAttribute("question", question);
 
         if (question.isPresent()) {
@@ -46,17 +46,18 @@ public class QuizServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
 
-        Integer currentQuestionId = (Integer) session.getAttribute(CURRENT_QUESTION_ID_ATTRIBUTE);
-        currentQuestionId = (isNull(currentQuestionId)) ? FIRST_QUESTION_ID : currentQuestionId;
+        Integer questionId = (Integer) session.getAttribute(CURRENT_QUESTION_ID_ATTRIBUTE);
+        questionId = (isNull(questionId)) ? FIRST_QUESTION_ID : questionId;
 
-        Optional<String> correctAnswer = questionRepository.getCorrectAnswerById(currentQuestionId);
+        Optional<String> correctAnswer = questionRepository.getCorrectAnswerById(questionId);
         String submittedAnswer = request.getParameter("answer");
 
         boolean isCorrect = correctAnswer.isPresent() && correctAnswer.get().equals(submittedAnswer);
 
         if (isCorrect) {
-            session.setAttribute(CURRENT_QUESTION_ID_ATTRIBUTE, currentQuestionId + 1);
-            Optional<Question> nextQuestion = questionRepository.getQuestionById(currentQuestionId + 1);
+            session.setAttribute(CURRENT_QUESTION_ID_ATTRIBUTE, questionId + 1);
+            Optional<Question> nextQuestion = questionRepository.getQuestionById(questionId + 1);
+
             request.setAttribute("question", nextQuestion);
             request.getRequestDispatcher(QUIZ_PAGE_JSP).forward(request, response);
         } else {

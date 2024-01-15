@@ -31,16 +31,16 @@ public class JsonFileQuestionRepository implements QuestionRepository {
     }
 
     @Override
-    public Optional<Question> getQuestionById(int id) {
+    public Optional<Question> getQuestionById(Integer questionId) {
         return questions.stream()
-                .filter(question -> question.getId() == id)
+                .filter(question -> question.getId() == questionId)
                 .findFirst();
     }
 
     @Override
-    public Optional<String> getCorrectAnswerById(Integer currentQuestionId) {
+    public Optional<String> getCorrectAnswerById(Integer questionId) {
         return questions.stream()
-                .filter(question -> question.getId() == currentQuestionId)
+                .filter(question -> question.getId() == questionId)
                 .map(Question::getAnswer)
                 .findFirst();
     }
