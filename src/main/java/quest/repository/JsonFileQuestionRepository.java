@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import static java.util.Objects.isNull;
+
 public class JsonFileQuestionRepository implements QuestionRepository {
     private static final String QUESTIONS_JSON = "/questions.json";
     private final Gson gson = new Gson();
@@ -30,7 +32,19 @@ public class JsonFileQuestionRepository implements QuestionRepository {
     }
 
     @Override
+    public Optional<Question> retrieveQuestion(Integer questionId) {
+        return isNull(questionId) ? findFirstQuestion() : getQuestionById(questionId);
+    }
+
+    public Optional<Question> findFirstQuestion() {
+        return questions.stream().findFirst();
+    }
+
+    @Override
     public Optional<Question> getQuestionById(Integer questionId) {
+        if (isNull(questionId)) {
+            return Optional.empty();
+        }
         return questions.stream()
                 .filter(question -> question.getId() == questionId)
                 .findFirst();
@@ -41,6 +55,16 @@ public class JsonFileQuestionRepository implements QuestionRepository {
         return questions.stream()
                 .filter(question -> question.getId() == questionId)
                 .map(Question::getAnswer)
+                .findFirst();
+    }
+
+    @Override
+    public Optional<Question> findNextQuestion(Integer questionId) {
+        if (isNull(questionId)) {
+            return Optional.empty();
+        }
+        return questions.stream()
+                .filter(question -> question.getId() == questionId + 1)
                 .findFirst();
     }
 }

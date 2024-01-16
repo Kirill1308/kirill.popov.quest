@@ -1,12 +1,16 @@
 package quest.checker;
 
+import lombok.AllArgsConstructor;
+import quest.repository.QuestionRepository;
+
 import java.util.Optional;
 
-public class AnswerChecker {
+@AllArgsConstructor
+public final class AnswerChecker {
+    private final QuestionRepository questionRepository;
 
-    private AnswerChecker() {
-    }
-    public static boolean isAnswerCorrect(Optional<String> correctAnswer, String submittedAnswer) {
+    public boolean isCorrect(Integer questionId, String submittedAnswer) {
+        Optional<String> correctAnswer = questionRepository.getCorrectAnswerById(questionId);
         return correctAnswer.isPresent() && correctAnswer.get().equals(submittedAnswer);
     }
 }

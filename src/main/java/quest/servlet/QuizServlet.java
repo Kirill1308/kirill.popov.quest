@@ -14,11 +14,8 @@ import quest.repository.QuestionRepository;
 import java.io.IOException;
 import java.util.Optional;
 
-import static java.util.Objects.isNull;
-
 @WebServlet("/quiz")
 public class QuizServlet extends HttpServlet {
-    public static final int FIRST_QUESTION_ID = 1;
     public static final String QUIZ_PAGE_JSP = "jsp/quizPage.jsp";
     public static final String QUIZ_FINISHED_JSP = "jsp/quizFinished.jsp";
     public static final String FAIL_PAGE_JSP = "jsp/failPage.jsp";
@@ -30,16 +27,12 @@ public class QuizServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         Integer questionId = (Integer) session.getAttribute(CURRENT_QUESTION_ID_ATTRIBUTE);
-        questionId = (isNull(questionId)) ? FIRST_QUESTION_ID : questionId;
+        Optional<Question> question = questionRepository.retrieveQuestion(questionId);
 
-        Optional<Question> question = questionRepository.getQuestionById(questionId);
         request.setAttribute("question", question);
 
-        if (question.isPresent()) {
-            request.getRequestDispatcher(QUIZ_PAGE_JSP).forward(request, response);
-        } else {
-            request.getRequestDispatcher(QUIZ_FINISHED_JSP).forward(request, response);
-        }
+        String destination = question.isPresent() ? QUIZ_PAGE_JSP : QUIZ_FINISHED_JSP;
+        request.getRequestDispatcher(destination).forward(request, response);
     }
 
     @Override
@@ -47,22 +40,29 @@ public class QuizServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         Integer questionId = (Integer) session.getAttribute(CURRENT_QUESTION_ID_ATTRIBUTE);
-        questionId = (isNull(questionId)) ? FIRST_QUESTION_ID : questionId;
-
         String submittedAnswer = request.getParameter("answer");
 
-        /*move 54-56 to a service class*/
-        Optional<String> correctAnswer = questionRepository.getCorrectAnswerById(questionId);
-        boolean isCorrect = AnswerChecker.isAnswerCorrect(correctAnswer, submittedAnswer);
+        questionId = determineQuestionId(questionId);
 
-        if (isCorrect) {
-            session.setAttribute(CURRENT_QUESTION_ID_ATTRIBUTE, questionId + 1);
-            Optional<Question> nextQuestion = questionRepository.getQuestionById(questionId + 1);
+        boolean isCorrect = new AnswerChecker(questionRepository).isCorrect(questionId, submittedAnswer);
+        if (!isCorrect) {
+            request.getRequestDispatcher(FAIL_PAGE_JSP).forward(request, response);
+            return;
+        }
 
+        Optional<Question> nextQuestion = questionRepository.findNextQuestion(questionId);
+
+        if (nextQuestion.isPresent()) {
+            session.setAttribute(CURRENT_QUESTION_ID_ATTRIBUTE, nextQuestion.get().getId());
             request.setAttribute("question", nextQuestion);
             request.getRequestDispatcher(QUIZ_PAGE_JSP).forward(request, response);
         } else {
-            request.getRequestDispatcher(FAIL_PAGE_JSP).forward(request, response);
+            request.getRequestDispatcher(QUIZ_FINISHED_JSP).forward(request, response);
         }
+    }
+
+    private static Integer determineQuestionId(Integer questionId) {
+        Optional<Question> question = questionRepository.retrieveQuestion(questionId);
+        return question.isPresent() ? question.get().getId() : null;
     }
 }
