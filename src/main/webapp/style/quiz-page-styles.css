@@ -1,7 +1,7 @@
 body {
-    background-color: #2c3e50;
-    color: #ecf0f1;
-    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    font-family: 'Roboto', sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -10,40 +10,52 @@ body {
 }
 
 .quiz-form {
-    background-color: #3498db;
-    padding: 20px;
+    background-color: #fff;
+    padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    width: 300px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 800px;
     text-align: center;
 }
 
+.question-heading-num {
+    color: #3498db;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
 .question-heading {
-    color: #ecf0f1;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 50px;
 }
 
 .answer-label {
     display: block;
-    margin: 10px 0;
+    margin:0 0;
     font-size: 18px;
+    text-align: left;
 }
 
 .answer-radio {
-    margin-right: 5px;
+    margin-right: 8px;
     cursor: pointer;
 }
 
 .submit-button {
-    background-color: #e74c3c;
-    color: #ecf0f1;
-    padding: 10px 15px;
+    background-color: #3498db;
+    color: #fff;
+    padding: 12px 20px;
+    margin: 40px 0;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px;
     transition: background-color 0.3s;
 }
 
 .submit-button:hover {
-    background-color: #c0392b;
+    background-color: #2980b9;
 }
