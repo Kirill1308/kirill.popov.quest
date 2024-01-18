@@ -1,5 +1,4 @@
 <%@ page import="quest.model.Question" %>
-<%@ page import="java.util.Optional" %>
 <%@ page import="quest.model.Option" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
@@ -14,14 +13,11 @@
 <body>
 <form action="quiz" class="quiz-form" method="post">
     <%
-        @SuppressWarnings("unchecked")
-        Optional<Question> question = (Optional<Question>) request.getAttribute("question");
-        if (question.isEmpty()) {
-            throw new RuntimeException("Question not found");
-        }
-        int questionId = question.get().getId();
-        String questionText = question.get().getText();
-        List<Option> options = List.of(question.get().getOptions());
+        Question question = (Question) request.getAttribute("question");
+
+        int questionId = question.getId();
+        String questionText = question.getText();
+        List<Option> options = List.of(question.getOptions());
     %>
 
     <h3 class="question-heading-num">

@@ -28,7 +28,8 @@ public class JsonFileQuestionRepository implements QuestionRepository {
 
     private List<Question> loadQuestionsFromJSON() {
         try (Reader reader = new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream(QUESTIONS_JSON)))) {
-            List<Question> loadedQuestions = gson.fromJson(reader, new TypeToken<List<Question>>() {}.getType());
+            List<Question> loadedQuestions = gson.fromJson(reader, new TypeToken<List<Question>>() {
+            }.getType());
             log.info("Loaded {} questions from JSON file", loadedQuestions.size());
             return loadedQuestions;
         } catch (Exception e) {
@@ -42,16 +43,8 @@ public class JsonFileQuestionRepository implements QuestionRepository {
         return isNull(questionId) ? findFirstQuestion() : getQuestionById(questionId);
     }
 
-    public Optional<Question> findFirstQuestion() {
-        log.info("Retrieving the first question.");
-        return questions.stream().findFirst();
-    }
-
     @Override
     public Optional<Question> getQuestionById(Integer questionId) {
-        if (isNull(questionId)) {
-            return Optional.empty();
-        }
         log.info("Retrieving question by ID: {}", questionId);
         return questions.stream()
                 .filter(question -> question.getId() == questionId)
@@ -70,11 +63,18 @@ public class JsonFileQuestionRepository implements QuestionRepository {
     @Override
     public Optional<Question> findNextQuestion(Integer questionId) {
         if (isNull(questionId)) {
-            return Optional.empty();
+            log.info("Finding the first question.");
+            return findFirstQuestion();
         }
+
         log.info("Finding the next question after ID: {}", questionId);
         return questions.stream()
                 .filter(question -> question.getId() == questionId + 1)
                 .findFirst();
+    }
+
+    private Optional<Question> findFirstQuestion() {
+        log.info("Retrieving the first question.");
+        return questions.stream().findFirst();
     }
 }
