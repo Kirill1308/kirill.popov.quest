@@ -5,6 +5,8 @@ import quest.repository.JsonFileQuestionRepository;
 import quest.repository.QuestionRepository;
 import quest.repository.UserRepository;
 import quest.repository.UserRepositoryImpl;
+import quest.service.AuthenticationHandler;
+import quest.service.SecurityService;
 import quest.service.QuizService;
 
 import java.util.HashMap;
@@ -16,6 +18,8 @@ public final class ApplicationContext {
     private static final QuestionRepository QUESTION_REPOSITORY = new JsonFileQuestionRepository();
     private static final UserRepository USER_REPOSITORY = new UserRepositoryImpl();
     private static final QuizService QUESTION_SERVICE = new QuizService(QUESTION_REPOSITORY);
+    private static final SecurityService SECURITY_SERVICE = new SecurityService();
+    private static final AuthenticationHandler AUTHENTICATION_HANDLER = new AuthenticationHandler(USER_REPOSITORY, SECURITY_SERVICE);
     private static final Map<Class<?>, Object> CLASS_TO_OBJECT_INSTANCE = new HashMap<>();
 
     private ApplicationContext() {
@@ -25,6 +29,8 @@ public final class ApplicationContext {
         CLASS_TO_OBJECT_INSTANCE.put(QuestionRepository.class, QUESTION_REPOSITORY);
         CLASS_TO_OBJECT_INSTANCE.put(UserRepository.class, USER_REPOSITORY);
         CLASS_TO_OBJECT_INSTANCE.put(QuizService.class, QUESTION_SERVICE);
+        CLASS_TO_OBJECT_INSTANCE.put(SecurityService.class, SECURITY_SERVICE);
+        CLASS_TO_OBJECT_INSTANCE.put(AuthenticationHandler.class, AUTHENTICATION_HANDLER);
     }
 
     @SuppressWarnings("unchecked")

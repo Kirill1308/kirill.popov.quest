@@ -41,8 +41,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void registerAndWriteUserToJson(String username, String password) {
-        users.add(new User(username, password));
+    public void registerAndWriteUserToJson(String username, String password, String salt) {
+        users.add(new User(username, password, salt));
 
         gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(users);
@@ -55,5 +55,14 @@ public class UserRepositoryImpl implements UserRepository {
             log.error("Error writing file.", e);
             throw new JsonFileIOException("Error writing file.", e);
         }
+    }
+
+    @Override
+    public String getSaltByUsername(String username) {
+        return users.stream()
+                .filter(user -> user.getUsername().equals(username))
+                .map(User::getSalt)
+                .findFirst()
+                .orElse(null);
     }
 }
