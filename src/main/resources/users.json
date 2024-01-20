@@ -3,5 +3,20 @@
     "username": "bob",
     "password": "e5e5244b1695bbc84670b101439b2aa2a2ffa305836b38d70ee9cf976e3dafd1",
     "salt": "3ba52caf9ff14ac14baa110dd0508e7b"
+  },
+  {
+    "username": "mike",
+    "password": "d1e739b4ae25ec028ed4779242fed2dd5748e264ce3b7c82bf5a2c0d1c3e1d85",
+    "salt": "88197761fbc5a20d6e3eb9261d58cfb6"
+  },
+  {
+    "username": "bob",
+    "password": "8bf7e1a2829f25236774e63856cf89fd52e2fc3e9a588aaa79b41d7eef146378",
+    "salt": "26f72d06a2a5e21e41abf785c61bd0de"
+  },
+  {
+    "username": "bob",
+    "password": "04e9898fe1f19aeed0427111974fd37d982c0cf94dc62cf8ec256e8c60494f92",
+    "salt": "db2410de15cc3efbe08309b27a4a0e21"
   }
 ]

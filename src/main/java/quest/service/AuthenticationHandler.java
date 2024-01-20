@@ -30,20 +30,16 @@ public class AuthenticationHandler {
         }
     }
 
-    public void handleRegistration(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+    public void handleRegistration(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String username = req.getParameter("registerUsername");
         String password = req.getParameter("registerPassword");
 
         String salt = securityService.generateSalt();
         String hashedPassword = securityService.hashPassword(password, salt);
 
-        if (!userRepository.checkUser(username, hashedPassword)) {
-            userRepository.registerAndWriteUserToJson(username, hashedPassword, salt);
-            log.info("User {} registered successfully.", username);
-            resp.sendRedirect("index.jsp");
-        } else {
-            handleFailedRegistration(username, req, resp);
-        }
+        userRepository.registerAndWriteUserToJson(username, hashedPassword, salt);
+        log.info("User {} registered successfully.", username);
+        resp.sendRedirect("index.jsp");
     }
 
     private boolean isValidLogin(String username, String password, String storedSalt) {
@@ -59,12 +55,5 @@ public class AuthenticationHandler {
         log.error("Invalid username or password: {}", username);
         req.setAttribute("errorMessage", "Invalid username or password");
         req.getRequestDispatcher("index.jsp").forward(req, resp);
-    }
-
-    private void handleFailedRegistration(String username, HttpServletRequest req, HttpServletResponse resp)
-            throws IOException, ServletException {
-        log.error("User already exists: {}", username);
-        req.setAttribute("errorMessage", "User already exists");
-        req.getRequestDispatcher("register.jsp").forward(req, resp);
     }
 }
