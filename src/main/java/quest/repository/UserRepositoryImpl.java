@@ -30,7 +30,7 @@ public class UserRepositoryImpl implements UserRepository {
             return gson.fromJson(reader, new TypeToken<List<User>>() {}.getType());
         } catch (Exception e) {
             log.error("Error reading users from JSON file.", e);
-            throw new JsonFileIOException("Error reading users from JSON file.", e);
+            throw new JsonFileIOException("Error reading users from JSON file.");
         }
     }
 
@@ -53,7 +53,7 @@ public class UserRepositoryImpl implements UserRepository {
             log.info("User registered and JSON file updated: {}", USERS_FULL_PATH_JSON);
         } catch (IOException e) {
             log.error("Error writing file.", e);
-            throw new JsonFileIOException("Error writing file.", e);
+            throw new JsonFileIOException("Error writing file.");
         }
     }
 

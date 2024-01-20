@@ -34,7 +34,7 @@ public class JsonFileQuestionRepository implements QuestionRepository {
             return loadedQuestions;
         } catch (Exception e) {
             log.error("Error reading questions from JSON file.", e);
-            throw new JsonFileIOException("Error reading questions from JSON file.", e);
+            throw new JsonFileIOException("Error reading questions from JSON file.");
         }
     }
 
@@ -47,7 +47,7 @@ public class JsonFileQuestionRepository implements QuestionRepository {
     public Optional<Question> getQuestionById(Integer questionId) {
         log.info("Retrieving question by ID: {}", questionId);
         return questions.stream()
-                .filter(question -> question.getId() == questionId)
+                .filter(question -> Objects.equals(question.getId(), questionId))
                 .findFirst();
     }
 
@@ -55,7 +55,7 @@ public class JsonFileQuestionRepository implements QuestionRepository {
     public Optional<String> getCorrectAnswerById(Integer questionId) {
         log.info("Retrieving correct answer by question ID: {}", questionId);
         return questions.stream()
-                .filter(question -> question.getId() == questionId)
+                .filter(question -> Objects.equals(question.getId(), questionId))
                 .map(Question::getAnswer)
                 .findFirst();
     }
@@ -73,7 +73,7 @@ public class JsonFileQuestionRepository implements QuestionRepository {
                 .findFirst();
     }
 
-    private Optional<Question> findFirstQuestion() {
+    public Optional<Question> findFirstQuestion() {
         log.info("Retrieving the first question.");
         return questions.stream().findFirst();
     }

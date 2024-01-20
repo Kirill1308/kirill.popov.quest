@@ -2,16 +2,12 @@ package quest.model;
 
 
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.ToString;
 
-@AllArgsConstructor
-@EqualsAndHashCode
 @Getter
-@ToString
+@AllArgsConstructor
 public final class Question {
-    private final int id;
+    private final Integer id;
     private final String text;
     private final Option[] options;
     private final String answer;
