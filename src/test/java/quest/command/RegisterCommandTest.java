@@ -25,7 +25,7 @@ class RegisterCommandTest {
     private HttpServletResponse mockResponse;
 
     @Test
-    void execute_runsHandleRegisterOfAuthenticationHandler() throws IOException {
+    void execute_runsHandleRegisterOfAuthenticationHandler() throws IOException, ServletException {
         RegisterCommand registerCommand = new RegisterCommand(mockAuthenticationHandler);
 
         registerCommand.execute(mockRequest, mockResponse);

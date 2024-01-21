@@ -7,10 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import quest.exception.JsonFileIOException;
 import quest.model.User;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,9 +33,14 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public boolean checkUser(String username, String password) {
+    public boolean authenticateUser(String username, String password) {
         return users.stream()
                 .anyMatch(user -> user.getUsername().equals(username) && user.getPassword().equals(password));
+    }
+
+    public boolean isUsernameTaken(String username) {
+        return users.stream()
+                .anyMatch(user -> user.getUsername().equals(username));
     }
 
     @Override
@@ -48,10 +50,12 @@ public class UserRepositoryImpl implements UserRepository {
         gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(users);
 
-        try (FileWriter writer = new FileWriter(USERS_FULL_PATH_JSON)) {
+        String file = new File("src/main/resources/users.json").getAbsolutePath();
+        try (FileWriter writer = new FileWriter(file)) {
             writer.write(json);
             writer.write(System.lineSeparator());
             log.info("User registered and JSON file updated: {}", USERS_FULL_PATH_JSON);
+            log.info("User stored in : {}", file);
         } catch (IOException e) {
             log.error("Error writing file.", e);
             throw new JsonFileIOException("Error writing file.");

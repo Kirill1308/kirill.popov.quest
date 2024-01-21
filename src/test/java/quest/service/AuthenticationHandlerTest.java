@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.Test;
 import quest.repository.UserRepository;
+import quest.repository.UserRepositoryImpl;
 
 import java.io.IOException;
 
@@ -15,7 +16,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class AuthenticationHandlerTest {
-    private final UserRepository userRepository = mock(UserRepository.class);
+    private final UserRepositoryImpl userRepository = mock(UserRepositoryImpl.class);
     private final SecurityService securityService = mock(SecurityService.class);
     private final AuthenticationHandler authenticationHandler = new AuthenticationHandler(userRepository, securityService);
     private final HttpServletRequest request = mock(HttpServletRequest.class);
@@ -29,7 +30,7 @@ class AuthenticationHandlerTest {
         when(request.getParameter("password")).thenReturn("password");
         when(userRepository.getSaltByUsername(anyString())).thenReturn("salt");
         when(securityService.hashPassword(anyString(), anyString())).thenReturn("hashedPassword");
-        when(userRepository.checkUser(anyString(), anyString())).thenReturn(true);
+        when(userRepository.authenticateUser(anyString(), anyString())).thenReturn(true);
 
         authenticationHandler.handleLogin(request, response);
 
@@ -44,7 +45,7 @@ class AuthenticationHandlerTest {
         when(request.getRequestDispatcher("index.jsp")).thenReturn(dispatcher);
         when(userRepository.getSaltByUsername(anyString())).thenReturn("salt");
         when(securityService.hashPassword(anyString(), anyString())).thenReturn("hashedPassword");
-        when(userRepository.checkUser(anyString(), anyString())).thenReturn(false);
+        when(userRepository.authenticateUser(anyString(), anyString())).thenReturn(false);
 
         authenticationHandler.handleLogin(request, response);
 
@@ -54,7 +55,7 @@ class AuthenticationHandlerTest {
     }
 
     @Test
-    void handleRegistration() throws IOException {
+    void handleRegistration() throws IOException, ServletException {
 
         when(request.getParameter("registerUsername")).thenReturn("user");
         when(request.getParameter("registerPassword")).thenReturn("password");

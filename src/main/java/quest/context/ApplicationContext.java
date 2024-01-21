@@ -19,7 +19,7 @@ import static java.util.Objects.isNull;
 
 public final class ApplicationContext {
     private static final QuestionRepository QUESTION_REPOSITORY = new JsonFileQuestionRepository();
-    private static final UserRepository USER_REPOSITORY = new UserRepositoryImpl();
+    private static final UserRepositoryImpl USER_REPOSITORY = new UserRepositoryImpl();
     private static final QuizService QUESTION_SERVICE = new QuizService(QUESTION_REPOSITORY);
     private static final SecurityService SECURITY_SERVICE = new SecurityService();
     private static final AuthenticationHandler AUTHENTICATION_HANDLER = new AuthenticationHandler(USER_REPOSITORY, SECURITY_SERVICE);
@@ -32,7 +32,7 @@ public final class ApplicationContext {
 
     static {
         CLASS_TO_OBJECT_INSTANCE.put(QuestionRepository.class, QUESTION_REPOSITORY);
-        CLASS_TO_OBJECT_INSTANCE.put(UserRepository.class, USER_REPOSITORY);
+        CLASS_TO_OBJECT_INSTANCE.put(UserRepositoryImpl.class, USER_REPOSITORY);
         CLASS_TO_OBJECT_INSTANCE.put(QuizService.class, QUESTION_SERVICE);
         CLASS_TO_OBJECT_INSTANCE.put(SecurityService.class, SECURITY_SERVICE);
         CLASS_TO_OBJECT_INSTANCE.put(AuthenticationHandler.class, AUTHENTICATION_HANDLER);

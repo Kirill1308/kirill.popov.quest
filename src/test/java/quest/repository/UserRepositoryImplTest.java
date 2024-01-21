@@ -3,7 +3,6 @@ package quest.repository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import quest.exception.JsonFileIOException;
 import quest.model.User;
 
@@ -11,9 +10,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -78,8 +75,8 @@ class UserRepositoryImplTest {
     void checkUser_with_valid_credentials_should_return_true() {
         UserRepositoryImpl userRepositoryImpl = mock(UserRepositoryImpl.class);
 
-        when(userRepositoryImpl.checkUser(validUsername, validPassword)).thenReturn(true);
-        boolean result = userRepositoryImpl.checkUser(validUsername, validPassword);
+        when(userRepositoryImpl.authenticateUser(validUsername, validPassword)).thenReturn(true);
+        boolean result = userRepositoryImpl.authenticateUser(validUsername, validPassword);
         assertTrue(result, "checkUser should return true when valid username and password are provided.");
     }
 
@@ -88,8 +85,8 @@ class UserRepositoryImplTest {
         UserRepositoryImpl userRepositoryImpl = mock(UserRepositoryImpl.class);
 
         String invalidUsername = "invalidUser";
-        when(userRepositoryImpl.checkUser(invalidUsername, validPassword)).thenReturn(false);
-        boolean result = userRepositoryImpl.checkUser(invalidUsername, validPassword);
+        when(userRepositoryImpl.authenticateUser(invalidUsername, validPassword)).thenReturn(false);
+        boolean result = userRepositoryImpl.authenticateUser(invalidUsername, validPassword);
         assertFalse(result, "checkUser should return false when invalid username is provided.");
     }
 
@@ -98,8 +95,8 @@ class UserRepositoryImplTest {
         UserRepositoryImpl userRepositoryImpl = mock(UserRepositoryImpl.class);
 
         String invalidPassword = "invalidPassword";
-        when(userRepositoryImpl.checkUser(validUsername, invalidPassword)).thenReturn(false);
-        boolean result = userRepositoryImpl.checkUser(validUsername, invalidPassword);
+        when(userRepositoryImpl.authenticateUser(validUsername, invalidPassword)).thenReturn(false);
+        boolean result = userRepositoryImpl.authenticateUser(validUsername, invalidPassword);
         assertFalse(result, "checkUser should return false when invalid password is provided.");
     }
 }

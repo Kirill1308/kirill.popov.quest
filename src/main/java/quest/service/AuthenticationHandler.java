@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import quest.repository.UserRepository;
+import quest.repository.UserRepositoryImpl;
 
 import java.io.IOException;
 
@@ -13,7 +13,7 @@ import java.io.IOException;
 @AllArgsConstructor
 public class AuthenticationHandler {
 
-    private final UserRepository userRepository;
+    private final UserRepositoryImpl userRepository;
     private final SecurityService securityService;
 
     public void handleLogin(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -30,22 +30,26 @@ public class AuthenticationHandler {
         }
     }
 
-    public void handleRegistration(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void handleRegistration(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         String username = req.getParameter("registerUsername");
         String password = req.getParameter("registerPassword");
 
         String salt = securityService.generateSalt();
         String hashedPassword = securityService.hashPassword(password, salt);
 
-        userRepository.registerAndWriteUserToJson(username, hashedPassword, salt);
-        log.info("User {} registered successfully.", username);
-        resp.sendRedirect("index.jsp");
+        if (userRepository.isUsernameTaken(username)) {
+            handleUsernameTaken(req, res, username);
+        } else {
+            userRepository.registerAndWriteUserToJson(username, hashedPassword, salt);
+            log.info("User {} registered successfully.", username);
+            res.sendRedirect("index.jsp");        }
     }
+
 
     private boolean isValidLogin(String username, String password, String storedSalt) {
         if (storedSalt != null) {
             String hashedPassword = securityService.hashPassword(password, storedSalt);
-            return userRepository.checkUser(username, hashedPassword);
+            return userRepository.authenticateUser(username, hashedPassword);
         }
         return false;
     }
@@ -55,5 +59,11 @@ public class AuthenticationHandler {
         log.error("Invalid username or password: {}", username);
         req.setAttribute("errorMessage", "Invalid username or password");
         req.getRequestDispatcher("index.jsp").forward(req, resp);
+    }
+
+    private void handleUsernameTaken(HttpServletRequest req, HttpServletResponse res, String username) throws ServletException, IOException {
+        log.error("User {} already exists.", username);
+        req.setAttribute("errorMessage", "Username is already taken");
+        req.getRequestDispatcher("signUp.jsp").forward(req, res);
     }
 }
