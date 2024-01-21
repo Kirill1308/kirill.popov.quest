@@ -77,4 +77,9 @@ public class JsonFileQuestionRepository implements QuestionRepository {
         log.info("Retrieving the first question.");
         return questions.stream().findFirst();
     }
+
+    public boolean checkAnswer(Integer questionId, String submittedAnswer) {
+        Optional<String> correctAnswer = getCorrectAnswerById(questionId);
+        return correctAnswer.isPresent() && correctAnswer.get().equals(submittedAnswer);
+    }
 }

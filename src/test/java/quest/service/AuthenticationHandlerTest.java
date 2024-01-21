@@ -33,7 +33,7 @@ class AuthenticationHandlerTest {
 
         authenticationHandler.handleLogin(request, response);
 
-        verify(response).sendRedirect("welcomePage.jsp");
+        verify(response).sendRedirect("homeWelcome.jsp");
     }
 
     @Test

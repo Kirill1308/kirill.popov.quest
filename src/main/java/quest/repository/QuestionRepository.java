@@ -15,4 +15,6 @@ public interface QuestionRepository {
     Optional<Question> findNextQuestion(Integer questionId);
 
     List<Question> getQuestions();
+
+    boolean checkAnswer(Integer questionId, String submittedAnswer);
 }

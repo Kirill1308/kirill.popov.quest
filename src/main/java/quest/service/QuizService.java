@@ -18,8 +18,8 @@ import java.util.Optional;
 @AllArgsConstructor
 public class QuizService {
     public static final String QUIZ_PAGE_JSP = "quizPage.jsp";
-    public static final String QUIZ_FINISHED_JSP = "quizFinished.jsp";
-    public static final String FAIL_PAGE_JSP = "failPage.jsp";
+    public static final String QUIZ_FINISHED_JSP = "completedQuiz.jsp";
+    public static final String FAIL_PAGE_JSP = "gameOver.jsp";
     public static final String CURRENT_QUESTION_ID_ATTRIBUTE = "currentQuestionId";
     public static final String CORRECT_ANSWERS_COUNT_ATTRIBUTE = "correctAnswersCount";
     public static final String TOTAL_QUESTIONS_COUNT_ATTRIBUTE = "totalQuestionsCount";
@@ -75,7 +75,7 @@ public class QuizService {
 
     private void handleNextQuestion(RequestHandlerContext context, Question nextQuestion) throws ServletException, IOException {
         context.getSession().setAttribute(CURRENT_QUESTION_ID_ATTRIBUTE, nextQuestion.getId());
-        context.getRequest().setAttribute("question", nextQuestion);
+        context.getReq().setAttribute("question", nextQuestion);
         forwardToPage(context, QUIZ_PAGE_JSP);
         log.info("Next question retrieved: {}", nextQuestion.getText());
     }
@@ -87,7 +87,7 @@ public class QuizService {
     }
 
     public void forwardToPage(RequestHandlerContext context, String page) throws ServletException, IOException {
-        context.getRequest().getRequestDispatcher(page).forward(context.getRequest(), context.getResponse());
+        context.getReq().getRequestDispatcher(page).forward(context.getReq(), context.getRes());
     }
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")

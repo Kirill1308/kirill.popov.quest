@@ -28,7 +28,7 @@
         </p>
         <%}%>
 
-        <a href="register.jsp">Create an account</a>
+        <a href="signUp.jsp">Create an account</a>
     </section>
 </div>
 </body>

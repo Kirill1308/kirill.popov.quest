@@ -88,5 +88,190 @@
     "username": "testuser",
     "password": "testpass",
     "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "password": "ff8a653772da517357b93f380636d90afecff6ef84f87a590c329b3659b69847",
+    "salt": "6b4a1f9cb4143d207edfb827b88c67e5"
+  },
+  {
+    "password": "b3f233785eecf7db06e4130355f25814777f9a63e9af56af157495a029148349",
+    "salt": "e2fa8940416f3c88b141aa32c979891a"
+  },
+  {
+    "password": "9a1e0dea2bad8f9b76d6a42d559e4054ab19170a33adec761e2d40b91366946a",
+    "salt": "7c772e1a9594c45a5e4007e43a2d13f8"
+  },
+  {
+    "password": "6c64279f9c2ded3301f414c451805245a539f51652306073e20e09c1c5c36726",
+    "salt": "5c557c0705632224ce1de343d6d7ef68"
+  },
+  {
+    "password": "f865f605f7072fdb6b334dbae54c85c2a5cc7e2469d245a5e1c29d445e091aaa",
+    "salt": "a6d3ba0a897e5c00e63893d29c71b9c2"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "testuser",
+    "password": "testpass",
+    "salt": "testsalt"
+  },
+  {
+    "username": "bob",
+    "password": "6343561b37c0ffe08695b0d058b5aad4f4b0cd0be53acf6edbd10f1fb33d63e0",
+    "salt": "c4f344ed94b986d6d9ddbae0cfba3ebd"
   }
 ]

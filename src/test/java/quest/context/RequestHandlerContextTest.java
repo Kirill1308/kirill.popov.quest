@@ -3,39 +3,56 @@ package quest.context;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class RequestHandlerContextTest {
 
-    // Testing the RequestHandlerContext Class.
+    private static final String CURRENT_QUESTION_ID_ATTRIBUTE = "currentQuestionId";
+
+    @Mock
+    private HttpServletRequest mockRequest;
+
+    @Mock
+    private HttpServletResponse mockResponse;
+
+    @Mock
+    private HttpSession mockSession;
+
+    @BeforeEach
+    void setUp() {
+        when(mockRequest.getSession()).thenReturn(mockSession);
+    }
+
     @Test
-    void testRequestHandlerContext() {
-        // Mock HttpServletRequest, HttpServletResponse and HttpSession
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
-        HttpSession session = mock(HttpSession.class);
+    void requestHandlerContext_ConstructorAndGetters() {
+        when(mockSession.getAttribute(CURRENT_QUESTION_ID_ATTRIBUTE)).thenReturn(42);
 
-        // Define the behaviour of these mocks.
-        when(request.getSession()).thenReturn(session);
-        when(session.getAttribute("CURRENT_QUESTION_ID")).thenReturn(20);
+        RequestHandlerContext context = new RequestHandlerContext(mockRequest, mockResponse);
 
-        // Create instance of class to test
-        RequestHandlerContext context = mock(RequestHandlerContext.class);
+        assertEquals(mockRequest, context.getReq());
+        assertEquals(mockResponse, context.getRes());
+        assertEquals(mockSession, context.getSession());
+        assertEquals(42, context.getQuestionId());
+    }
 
-        // Define the behavior of context mock
-        when(context.getRequest()).thenReturn(request);
-        when(context.getResponse()).thenReturn(response);
-        when(context.getSession()).thenReturn(session);
-        when(context.getQuestionId()).thenReturn(20);
+    @Test
+    void constructor_WithNullQuestionIdAttribute() {
+        when(mockSession.getAttribute(CURRENT_QUESTION_ID_ATTRIBUTE)).thenReturn(null);
 
-        // Run the tests
-        assertNotNull(context.getRequest());
-        assertNotNull(context.getResponse());
-        assertNotNull(context.getSession());
-        assertEquals(Integer.valueOf(20), context.getQuestionId());
+        RequestHandlerContext context = new RequestHandlerContext(mockRequest, mockResponse);
+
+        assertEquals(mockRequest, context.getReq());
+        assertEquals(mockResponse, context.getRes());
+        assertEquals(mockSession, context.getSession());
+        assertNull(context.getQuestionId());
     }
 }

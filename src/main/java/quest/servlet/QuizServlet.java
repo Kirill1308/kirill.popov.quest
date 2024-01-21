@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j2;
-import quest.checker.AnswerChecker;
 import quest.context.ApplicationContext;
 import quest.context.RequestHandlerContext;
 import quest.model.Question;
@@ -50,7 +49,7 @@ public class QuizServlet extends HttpServlet {
         Integer questionId = nextQuestion.map(Question::getId).orElse(context.getQuestionId());
         context.setQuestionId(questionId);
 
-        boolean isAnswerCorrect = new AnswerChecker(questionRepository).isCorrect(context.getQuestionId(), submittedAnswer);
+        boolean isAnswerCorrect = questionRepository.checkAnswer(context.getQuestionId(), submittedAnswer);
         quizService.handleAnswer(isAnswerCorrect, context);
     }
 }

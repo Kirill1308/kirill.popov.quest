@@ -24,7 +24,7 @@ public class AuthenticationHandler {
 
         if (isValidLogin(username, password, storedSalt)) {
             log.info("User {} logged in successfully.", username);
-            resp.sendRedirect("welcomePage.jsp");
+            resp.sendRedirect("homeWelcome.jsp");
         } else {
             handleFailedLogin(username, req, resp);
         }

@@ -1,5 +1,7 @@
 package quest.service;
 
+import quest.exception.PasswordHashingException;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -20,7 +22,7 @@ public class SecurityService {
             byte[] hashedPassword = md.digest(saltedPassword.getBytes());
             return bytesToHex(hashedPassword);
         }  catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Error hashing password", e);
+            throw new PasswordHashingException("Error hashing password");
         }
     }
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style/fail-page.css">
+    <link rel="stylesheet" href="style/game-over.css">
     <title>Game Over</title>
 </head>
 <body>
@@ -16,7 +16,7 @@
     <p>Your final score is: <span style="color: #28a745;"><%=score%>/<%=total%></span></p>
 </div>
 
-<form action="welcomePage.jsp" method="get">
+<form action="homeWelcome.jsp" method="get">
     <input type="submit" value="Play Again" class="start-quiz-button">
 </form>
 

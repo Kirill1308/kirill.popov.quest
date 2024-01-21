@@ -6,12 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class InstanceNotFoundExceptionTest {
     @Test
-    void instanceNotFoundException() {
-        String message = "Instance not found!";
-        try {
-            throw new InstanceNotFoundException(message);
-        } catch (InstanceNotFoundException e) {
-            assertEquals(e.getMessage(), message);
-        }
+    void instanceNotFoundException_Constructor() {
+        PasswordHashingException exception = new PasswordHashingException("Test message");
+
+        assertEquals("Test message", exception.getMessage());
     }
 }

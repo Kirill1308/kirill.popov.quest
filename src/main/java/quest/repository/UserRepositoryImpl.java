@@ -27,7 +27,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     private List<User> loadUsersFromJSON() {
         try (Reader reader = new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream(USERS_JSON)))) {
-            return gson.fromJson(reader, new TypeToken<List<User>>() {}.getType());
+            return gson.fromJson(reader, new TypeToken<List<User>>() {
+            }.getType());
         } catch (Exception e) {
             log.error("Error reading users from JSON file.", e);
             throw new JsonFileIOException("Error reading users from JSON file.");

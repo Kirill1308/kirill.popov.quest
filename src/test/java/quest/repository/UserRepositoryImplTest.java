@@ -1,6 +1,9 @@
 package quest.repository;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import quest.exception.JsonFileIOException;
 import quest.model.User;
 
@@ -8,27 +11,29 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class UserRepositoryImplTest {
+    private UserRepositoryImpl userRepositoryImpl;
+    private final String validUsername = "john";
+    private final String validPassword = "johnpassword";
 
-    @Test
-    void checkUser_returnsTrue() {
-        UserRepositoryImpl userRepo = spy(UserRepositoryImpl.class);
-        when(userRepo.checkUser("user1", "pass1")).thenReturn(true);
-        assertTrue(userRepo.checkUser("user1", "pass1"));
+    @BeforeEach
+    void setUp() {
+        List<User> users = new ArrayList<>();
+        users.add(new User(validUsername, validPassword, "salt"));
+        userRepositoryImpl = new UserRepositoryImpl();
     }
 
-    @Test
-    void checkUser_returnsFalse() {
-        UserRepositoryImpl userRepo = spy(UserRepositoryImpl.class);
-        when(userRepo.checkUser("user1", "pass1")).thenReturn(false);
-        assertFalse(userRepo.checkUser("user1", "pass1"));
+    @AfterEach
+    void tearDown() {
+        userRepositoryImpl = null;
     }
 
     @Test
@@ -63,31 +68,38 @@ class UserRepositoryImplTest {
 
     @Test
     void getSaltByUsername_returnsSalt() {
-        UserRepositoryImpl userRepository = spy(UserRepositoryImpl.class);
+        UserRepositoryImpl userRepository = mock(UserRepositoryImpl.class);
         when(userRepository.getSaltByUsername("test1")).thenReturn("salt1");
 
         assertEquals("salt1", userRepository.getSaltByUsername("test1"));
     }
 
-/*    @Test
-    void testGetSaltByUsernameForNonexistentUser() {
-        List<User> users = new ArrayList<>();
-        users.add(new User("test1", "pass1", "salt1"));
-        users.add(new User("test2", "pass2", "salt2"));
-        UserRepositoryImpl userRepository = new UserRepositoryImpl(users);
+    @Test
+    void checkUser_with_valid_credentials_should_return_true() {
+        UserRepositoryImpl userRepositoryImpl = mock(UserRepositoryImpl.class);
 
-        String salt = userRepository.getSaltByUsername("test3");
-        assertEquals(null, salt);
+        when(userRepositoryImpl.checkUser(validUsername, validPassword)).thenReturn(true);
+        boolean result = userRepositoryImpl.checkUser(validUsername, validPassword);
+        assertTrue(result, "checkUser should return true when valid username and password are provided.");
     }
 
     @Test
-    void getSaltByUsernameForEmptyUsername() {
-        // setup
-        List<User> users = new ArrayList<>();
-        UserRepositoryImpl userRepository = new UserRepositoryImpl(users);
+    void checkUser_with_invalid_username_should_return_false() {
+        UserRepositoryImpl userRepositoryImpl = mock(UserRepositoryImpl.class);
 
-        // test
-        assertThrows(NullPointerException.class, () -> userRepository.getSaltByUsername(null));
-    }*/
+        String invalidUsername = "invalidUser";
+        when(userRepositoryImpl.checkUser(invalidUsername, validPassword)).thenReturn(false);
+        boolean result = userRepositoryImpl.checkUser(invalidUsername, validPassword);
+        assertFalse(result, "checkUser should return false when invalid username is provided.");
+    }
 
+    @Test
+    void checkUser_with_invalid_password_should_return_false() {
+        UserRepositoryImpl userRepositoryImpl = mock(UserRepositoryImpl.class);
+
+        String invalidPassword = "invalidPassword";
+        when(userRepositoryImpl.checkUser(validUsername, invalidPassword)).thenReturn(false);
+        boolean result = userRepositoryImpl.checkUser(validUsername, invalidPassword);
+        assertFalse(result, "checkUser should return false when invalid password is provided.");
+    }
 }

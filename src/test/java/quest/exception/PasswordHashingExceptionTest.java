@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class JsonFileIOExceptionTest {
+class PasswordHashingExceptionTest {
     @Test
-    void jsonFileIOException_Constructor() {
-        JsonFileIOException exception = new JsonFileIOException("Test message");
+    void passwordHashingException_Constructor() {
+        PasswordHashingException exception = new PasswordHashingException("Test message");
 
         assertEquals("Test message", exception.getMessage());
     }

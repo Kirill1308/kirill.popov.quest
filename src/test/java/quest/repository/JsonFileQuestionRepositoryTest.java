@@ -1,9 +1,9 @@
 package quest.repository;
 
+import com.google.gson.Gson;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import quest.exception.JsonFileIOException;
 import quest.model.Question;
 
 import java.util.ArrayList;
@@ -16,25 +16,34 @@ import static org.mockito.Mockito.*;
 
 class JsonFileQuestionRepositoryTest {
 
-    private JsonFileQuestionRepository repository;
+    private JsonFileQuestionRepository spyRepo;
 
     @BeforeEach
     void setUp() {
-        repository = spy(JsonFileQuestionRepository.class);
+        spyRepo = spy(JsonFileQuestionRepository.class);
     }
 
     @Test
+    void getGson_shouldReturnGson() {
+        JsonFileQuestionRepository questionRepository = new JsonFileQuestionRepository();
+
+        Gson gson = questionRepository.getGson();
+
+        assertNotNull(gson, "Gson instance should not be null");
+        assertSame(gson, questionRepository.getGson(), "The same Gson instance should be returned");
+    }
+    @Test
     void retrieveQuestion_returnsNonNull() {
         Question question = new Question(1, "text", null, "answer");
-        when(repository.retrieveQuestion(1)).thenReturn(Optional.of(question));
+        when(spyRepo.retrieveQuestion(1)).thenReturn(Optional.of(question));
 
-        Optional<Question> retrievedQuestion = repository.retrieveQuestion(1);
+        Optional<Question> retrievedQuestion = spyRepo.retrieveQuestion(1);
         assertTrue(retrievedQuestion.isPresent(), "Expected question for valid id");
     }
 
     @Test
     void retrieveQuestion_returnsEmpty() {
-        Optional<Question> question = repository.retrieveQuestion(100);
+        Optional<Question> question = spyRepo.retrieveQuestion(100);
         assertTrue(question.isEmpty(), "Expected no question for invalid id");
     }
 
@@ -43,10 +52,10 @@ class JsonFileQuestionRepositoryTest {
         Question question1 = new Question(1, "text", null, "answer");
         Question question2 = new Question(2, "text", null, "answer");
 
-        when(repository.getQuestions()).thenReturn(Arrays.asList(question1, question2));
+        when(spyRepo.getQuestions()).thenReturn(Arrays.asList(question1, question2));
 
         Integer testId = 3;
-        Assertions.assertEquals(Optional.empty(), repository.getQuestionById(testId));
+        Assertions.assertEquals(Optional.empty(), spyRepo.getQuestionById(testId));
     }
 
     @Test
@@ -54,27 +63,27 @@ class JsonFileQuestionRepositoryTest {
         Question question1 = new Question(1, "text", null, "answer");
         Question question2 = new Question(2, "text", null, "answer");
 
-        when(repository.getQuestions()).thenReturn(Arrays.asList(question1, question2));
-        when(repository.getQuestionById(1)).thenReturn(Optional.of(question1));
+        when(spyRepo.getQuestions()).thenReturn(Arrays.asList(question1, question2));
+        when(spyRepo.getQuestionById(1)).thenReturn(Optional.of(question1));
 
         Integer testId = 1;
-        Assertions.assertEquals(Optional.of(question1), repository.getQuestionById(testId));
+        Assertions.assertEquals(Optional.of(question1), spyRepo.getQuestionById(testId));
     }
 
     @Test
     void testGetCorrectAnswerById_ReturnsCorrectAnswer_WhenAnswerExists() {
-        when(repository.getCorrectAnswerById(1)).thenReturn(Optional.of("Answer"));
+        when(spyRepo.getCorrectAnswerById(1)).thenReturn(Optional.of("Answer"));
 
-        Optional<String> answer = repository.getCorrectAnswerById(1);
+        Optional<String> answer = spyRepo.getCorrectAnswerById(1);
 
         assertEquals("Answer", answer.orElse(null));
     }
 
     @Test
     void findNextQuestionWithPresentId() {
-        when(repository.findNextQuestion(1)).thenReturn(Optional.of(new Question(2, "question2", null, "answer2")));
+        when(spyRepo.findNextQuestion(1)).thenReturn(Optional.of(new Question(2, "question2", null, "answer2")));
 
-        Question findNextQuestionResult = repository.findNextQuestion(1).orElse(null);
+        Question findNextQuestionResult = spyRepo.findNextQuestion(1).orElse(null);
 
         assertNotNull(findNextQuestionResult);
         assertEquals(2, findNextQuestionResult.getId());
@@ -86,9 +95,9 @@ class JsonFileQuestionRepositoryTest {
         questions.add(new Question(1, "question1", null, "answer1"));
         questions.add(new Question(2, "question2", null, "answer2"));
 
-        when(repository.findNextQuestion(null)).thenReturn(Optional.of(questions.get(0)));
+        when(spyRepo.findNextQuestion(null)).thenReturn(Optional.of(questions.get(0)));
 
-        assertEquals(questions.get(0), repository.findNextQuestion(null).orElse(null));
+        assertEquals(questions.get(0), spyRepo.findNextQuestion(null).orElse(null));
     }
 
     @Test
@@ -97,20 +106,41 @@ class JsonFileQuestionRepositoryTest {
         questions.add(new Question(1, "question1", null, "answer1"));
         questions.add(new Question(2, "question2", null, "answer2"));
 
-        when(repository.findNextQuestion(0)).thenReturn(Optional.of(questions.get(1)));
+        when(spyRepo.findNextQuestion(0)).thenReturn(Optional.of(questions.get(1)));
 
-        assertEquals(questions.get(1), repository.findNextQuestion(0).orElse(null));
+        assertEquals(questions.get(1), spyRepo.findNextQuestion(0).orElse(null));
     }
 
     @Test
     void findFirstQuestion_whenNoQuestionsExist() {
         ArrayList<Question> questions = new ArrayList<>();
 
-        doReturn(questions).when(repository).getQuestions();
+        doReturn(questions).when(spyRepo).getQuestions();
 
-        when(repository.findFirstQuestion()).thenReturn(Optional.empty());
-        Optional<Question> result = repository.findFirstQuestion();
+        when(spyRepo.findFirstQuestion()).thenReturn(Optional.empty());
+        Optional<Question> result = spyRepo.findFirstQuestion();
 
         assertFalse(result.isPresent(), "expected no result");
+    }
+
+    @Test
+    void isCorrect_ShouldReturnTrue_WhenSubmittedAnswerIsCorrect() {
+        Integer testQuestionId = 1;
+        String correctAnswer = "Test Answer";
+
+        when(spyRepo.getCorrectAnswerById(testQuestionId)).thenReturn(Optional.of(correctAnswer));
+
+        assertTrue(spyRepo.checkAnswer(testQuestionId, correctAnswer), "Expected the method to return true for the correct answer");
+    }
+
+    @Test
+    void isCorrect_returnsFalse() {
+        Integer testQuestionId = 1;
+        String correctAnswer = "Test Answer";
+        String incorrectAnswer = "Wrong Answer";
+
+        when(spyRepo.getCorrectAnswerById(testQuestionId)).thenReturn(Optional.of(correctAnswer));
+
+        assertFalse(spyRepo.checkAnswer(testQuestionId, incorrectAnswer), "Expected the method to return false for the incorrect answer");
     }
 }

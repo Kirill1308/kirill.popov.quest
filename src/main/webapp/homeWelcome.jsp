@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style/welcome-page.css">
+    <link rel="stylesheet" href="style/home-welcome.css">
     <title>Welcome to the Quiz</title>
 </head>
 

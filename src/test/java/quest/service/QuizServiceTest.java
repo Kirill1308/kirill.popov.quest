@@ -1,20 +1,16 @@
 package quest.service;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import jakarta.servlet.http.HttpSession;
-import org.mockito.Mockito;
 import quest.model.Option;
 import quest.model.Question;
 import quest.repository.QuestionRepository;
 import quest.context.RequestHandlerContext;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -43,7 +39,7 @@ class QuizServiceTest {
 
         when(mockContext.getSession()).thenReturn(mockSession);
         mockRequest = mock(HttpServletRequest.class);
-        when(mockContext.getRequest()).thenReturn(mockRequest);
+        when(mockContext.getReq()).thenReturn(mockRequest);
     }
 
     @Test
