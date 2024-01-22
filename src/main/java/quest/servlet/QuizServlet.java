@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import quest.context.ApplicationContext;
 import quest.context.RequestHandlerContext;
@@ -24,13 +25,14 @@ public class QuizServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         log.info("Handling GET request for QuizServlet");
-        RequestHandlerContext context = new RequestHandlerContext(request, response);
+        HttpSession session = request.getSession();
+        RequestHandlerContext context = new RequestHandlerContext(request, response, session);
 
         quizService.setSessionAttributes(context);
 
         Optional<Question> question = quizService.retrieveQuestion(context);
         if (question.isPresent()) {
-            quizService.setQuestionAttributes(request, question.get());
+            quizService.setQuestionAttributes(context, question.get());
             log.info("Question retrieved: {}", question.get().getText());
         }
 
@@ -41,7 +43,8 @@ public class QuizServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         log.info("Handling POST request for QuizServlet");
-        RequestHandlerContext context = new RequestHandlerContext(request, response);
+        HttpSession session = request.getSession();
+        RequestHandlerContext context = new RequestHandlerContext(request, response, session);
 
         String submittedAnswer = request.getParameter("answer");
         Optional<Question> nextQuestion = questionRepository.findNextQuestion(context.getQuestionId());

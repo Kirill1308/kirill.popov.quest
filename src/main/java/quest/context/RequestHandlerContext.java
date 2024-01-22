@@ -10,16 +10,16 @@ import static quest.service.QuizService.CURRENT_QUESTION_ID_ATTRIBUTE;
 
 @Getter
 public final class RequestHandlerContext {
-    private final HttpServletRequest req;
-    private final HttpServletResponse res;
+    private final HttpServletRequest request;
+    private final HttpServletResponse response;
     private final HttpSession session;
     @Setter
     private Integer questionId;
 
-    public RequestHandlerContext(HttpServletRequest req, HttpServletResponse res) {
-        this.req = req;
-        this.res = res;
-        this.session = req.getSession();
+    public RequestHandlerContext(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        this.request = request;
+        this.response = response;
+        this.session = session;
         setQuestionId();
     }
     public void setQuestionId() {

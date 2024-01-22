@@ -2,10 +2,10 @@ package quest.context;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import quest.context.ApplicationContext;
 import quest.exception.InstanceNotFoundException;
 import quest.repository.QuestionRepository;
 import quest.repository.UserRepository;
+import quest.repository.UserRepositoryImpl;
 import quest.service.AuthenticationHandler;
 import quest.service.QuizService;
 import quest.service.SecurityService;
@@ -32,7 +32,7 @@ class ApplicationContextTest {
 
   @Test
   void getInstanceOfUserRepository() {
-      UserRepository userRepository = ApplicationContext.getInstanceOf(UserRepository.class);
+      UserRepository userRepository = ApplicationContext.getInstanceOf(UserRepositoryImpl.class);
       Assertions.assertNotNull(userRepository, "UserRepository should not be null");
   }
 

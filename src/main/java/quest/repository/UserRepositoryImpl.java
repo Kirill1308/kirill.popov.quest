@@ -15,8 +15,8 @@ import java.util.Objects;
 public class UserRepositoryImpl implements UserRepository {
     public static final String USERS_JSON = "/users.json";
     public static final String USERS_FULL_PATH_JSON = "C:\\Users\\kpopo\\IdeaProjects\\kirill.popov.quest\\src\\main\\resources\\users.json";
-    private Gson gson = new Gson();
     private final List<User> users;
+    private Gson gson = new Gson();
 
     public UserRepositoryImpl() {
         users = loadUsersFromJSON();

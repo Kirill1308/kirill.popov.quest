@@ -31,10 +31,10 @@ public class QuizService {
         context.getSession().setAttribute(TOTAL_QUESTIONS_COUNT_ATTRIBUTE, questionRepository.getQuestions().size());
     }
 
-    public void setQuestionAttributes(HttpServletRequest request, Question question) {
+    public void setQuestionAttributes(RequestHandlerContext context, Question question) {
         List<Option> options = List.of(question.getOptions());
-        request.setAttribute("question", question);
-        request.setAttribute("options", options);
+        context.getRequest().setAttribute("question", question);
+        context.getRequest().setAttribute("options", options);
     }
 
     public Optional<Question> retrieveQuestion(RequestHandlerContext context) {
@@ -75,7 +75,7 @@ public class QuizService {
 
     private void handleNextQuestion(RequestHandlerContext context, Question nextQuestion) throws ServletException, IOException {
         context.getSession().setAttribute(CURRENT_QUESTION_ID_ATTRIBUTE, nextQuestion.getId());
-        context.getReq().setAttribute("question", nextQuestion);
+        context.getRequest().setAttribute("question", nextQuestion);
         forwardToPage(context, QUIZ_PAGE_JSP);
         log.info("Next question retrieved: {}", nextQuestion.getText());
     }
@@ -87,7 +87,7 @@ public class QuizService {
     }
 
     public void forwardToPage(RequestHandlerContext context, String page) throws ServletException, IOException {
-        context.getReq().getRequestDispatcher(page).forward(context.getReq(), context.getRes());
+        context.getRequest().getRequestDispatcher(page).forward(context.getRequest(), context.getResponse());
     }
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")

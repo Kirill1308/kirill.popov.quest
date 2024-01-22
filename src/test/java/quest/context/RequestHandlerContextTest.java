@@ -3,7 +3,6 @@ package quest.context;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -27,19 +26,14 @@ class RequestHandlerContextTest {
     @Mock
     private HttpSession mockSession;
 
-    @BeforeEach
-    void setUp() {
-        when(mockRequest.getSession()).thenReturn(mockSession);
-    }
-
     @Test
     void requestHandlerContext_ConstructorAndGetters() {
         when(mockSession.getAttribute(CURRENT_QUESTION_ID_ATTRIBUTE)).thenReturn(42);
 
-        RequestHandlerContext context = new RequestHandlerContext(mockRequest, mockResponse);
+        RequestHandlerContext context = new RequestHandlerContext(mockRequest, mockResponse, mockSession);
 
-        assertEquals(mockRequest, context.getReq());
-        assertEquals(mockResponse, context.getRes());
+        assertEquals(mockRequest, context.getRequest());
+        assertEquals(mockResponse, context.getResponse());
         assertEquals(mockSession, context.getSession());
         assertEquals(42, context.getQuestionId());
     }
@@ -48,11 +42,8 @@ class RequestHandlerContextTest {
     void constructor_WithNullQuestionIdAttribute() {
         when(mockSession.getAttribute(CURRENT_QUESTION_ID_ATTRIBUTE)).thenReturn(null);
 
-        RequestHandlerContext context = new RequestHandlerContext(mockRequest, mockResponse);
+        RequestHandlerContext context = new RequestHandlerContext(mockRequest, mockResponse, mockSession);
 
-        assertEquals(mockRequest, context.getReq());
-        assertEquals(mockResponse, context.getRes());
-        assertEquals(mockSession, context.getSession());
         assertNull(context.getQuestionId());
     }
 }
