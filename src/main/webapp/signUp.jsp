@@ -23,7 +23,7 @@
 <%--            <label for="registerPasswordConfirm">Confirm Password:</label>
             <input type="password" id="registerPasswordConfirm" name="registerPasswordConfirm" required>--%>
 
-            <button type="submit">Register</button>
+            <button type="submit">Sign Up</button>
 
             <%if (request.getAttribute("errorMessage") != null) {%>
             <p class="error-message"><%=(String) request.getAttribute("errorMessage")%>

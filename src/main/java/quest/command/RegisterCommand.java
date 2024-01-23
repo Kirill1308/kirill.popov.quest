@@ -13,7 +13,7 @@ public class RegisterCommand implements ActionCommand {
     private final AuthenticationHandler authenticationHandler;
 
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        authenticationHandler.handleRegistration(req, resp);
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        authenticationHandler.handleRegistration(request, response);
     }
 }

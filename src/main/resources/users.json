@@ -1,7 +1,27 @@
 [
   {
-    "username": "mike",
-    "password": "d1e739b4ae25ec028ed4779242fed2dd5748e264ce3b7c82bf5a2c0d1c3e1d85",
-    "salt": "88197761fbc5a20d6e3eb9261d58cfb6"
+    "username": "bob",
+    "password": "ef2b6556b85724e8fed0b31020507c33f03b465d0756c2c086db5adcc935d628",
+    "salt": "cec5fd46c9f4d96d287eefc3c5bb82e5"
+  },
+  {
+    "username": "admin",
+    "password": "f10792bb8a25d23841c49044ce6304a2b8fa61eb588c064053493291cd21f3a7",
+    "salt": "a844467be2af993230bcb1310e957731"
+  },
+  {
+    "username": "kirill",
+    "password": "146415592ab9e9ebb982e9aa02c487e70d3ca81dc3a76a5cbb3c4e064e15535e",
+    "salt": "03b2fcf770bcd8af0713676d824de843"
+  },
+  {
+    "username": "fvfv",
+    "password": "9c3acef447a73e77d77346d54d9f93e484f9f9ff4daec444c282f82618d976b3",
+    "salt": "a698c8ff6a7e4c44cf2051e8e568c79e"
+  },
+  {
+    "username": "mikefgnjgkbml",
+    "password": "318547aef088da1bf99015258780204d212a5cda4abc8f673c60bffdad4efd37",
+    "salt": "59a6388165e44e699f0f65ff633d03ac"
   }
 ]

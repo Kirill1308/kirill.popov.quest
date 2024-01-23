@@ -78,7 +78,7 @@ class UserRepositoryImplTest {
             }
 
         } catch (IOException e) {
-            throw new JsonFileIOException("Error reading file.");
+            throw new JsonFileIOException("Error reading file.", e);
         }
         return jsonContent;
     }

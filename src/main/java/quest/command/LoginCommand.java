@@ -13,7 +13,7 @@ public class LoginCommand implements ActionCommand {
     private final AuthenticationHandler authenticationHandler;
 
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        authenticationHandler.handleLogin(req, resp);
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        authenticationHandler.handleLogin(request, response);
     }
 }

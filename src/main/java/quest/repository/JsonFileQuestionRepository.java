@@ -34,7 +34,7 @@ public class JsonFileQuestionRepository implements QuestionRepository {
             return loadedQuestions;
         } catch (Exception e) {
             log.error("Error reading questions from JSON file.", e);
-            throw new JsonFileIOException("Error reading questions from JSON file.");
+            throw new JsonFileIOException("Error reading questions from JSON file.", e);
         }
     }
 

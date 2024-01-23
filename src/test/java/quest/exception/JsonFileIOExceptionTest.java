@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class JsonFileIOExceptionTest {
     @Test
     void jsonFileIOException_Constructor() {
-        JsonFileIOException exception = new JsonFileIOException("Test message");
+        JsonFileIOException exception = new JsonFileIOException("Test message", new Throwable());
 
         assertEquals("Test message", exception.getMessage());
     }
