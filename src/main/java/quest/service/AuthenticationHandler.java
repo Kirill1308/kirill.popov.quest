@@ -54,8 +54,7 @@ public class AuthenticationHandler {
         return false;
     }
 
-    private void handleFailedLogin(String username, HttpServletRequest req, HttpServletResponse resp)
-            throws IOException, ServletException {
+    private void handleFailedLogin(String username, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         log.error("Invalid username or password: {}", username);
         req.setAttribute("errorMessage", "Invalid username or password");
         req.getRequestDispatcher("index.jsp").forward(req, resp);

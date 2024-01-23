@@ -3,6 +3,7 @@ package quest.repository;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import quest.exception.JsonFileIOException;
 import quest.model.User;
@@ -15,6 +16,7 @@ import java.util.Objects;
 public class UserRepositoryImpl implements UserRepository {
     public static final String USERS_JSON = "/users.json";
     public static final String USERS_FULL_PATH_JSON = "C:\\Users\\kpopo\\IdeaProjects\\kirill.popov.quest\\src\\main\\resources\\users.json";
+    @Getter
     private final List<User> users;
     private Gson gson = new Gson();
 
