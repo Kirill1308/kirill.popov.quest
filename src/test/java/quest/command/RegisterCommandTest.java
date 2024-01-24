@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import quest.service.AuthenticationHandler;
 
@@ -25,7 +24,7 @@ class RegisterCommandTest {
     private HttpServletResponse mockResponse;
 
     @Test
-    void execute_runsHandleRegisterOfAuthenticationHandler() throws IOException, ServletException {
+    void handleRegistration_callsAuthenticationHandlerOnce() throws IOException, ServletException {
         RegisterCommand registerCommand = new RegisterCommand(mockAuthenticationHandler);
 
         registerCommand.execute(mockRequest, mockResponse);

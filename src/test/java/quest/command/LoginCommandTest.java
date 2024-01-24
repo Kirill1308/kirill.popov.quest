@@ -25,7 +25,7 @@ class LoginCommandTest {
     private HttpServletResponse mockResponse;
 
     @Test
-    void execute_runsHandleLoginOfAuthenticationHandler() throws ServletException, IOException {
+    void handleLogin_callsAuthenticationHandlerOnce() throws ServletException, IOException {
         LoginCommand loginCommand = new LoginCommand(mockAuthenticationHandler);
 
         loginCommand.execute(mockRequest, mockResponse);

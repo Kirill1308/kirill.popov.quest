@@ -2,11 +2,12 @@ package quest.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class QuestionTest {
     @Test
-    void testConstructorAndGetters() {
+    void constructorAndGetters() {
         Integer id = 1;
         String text = "What is the capital of France?";
         Option[] options = new Option[]{new Option("A")};
@@ -19,5 +20,4 @@ class QuestionTest {
         assertArrayEquals(options, question.getOptions());
         assertEquals(answer, question.getAnswer());
     }
-
 }

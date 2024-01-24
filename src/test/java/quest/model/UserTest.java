@@ -2,7 +2,7 @@ package quest.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class UserTest {
     @Test
@@ -19,7 +19,7 @@ class UserTest {
     }
 
     @Test
-    void setter() {
+    void setSalt() {
         User user = new User("john.doe", "password123", "oldSalt");
         String newSalt = "newSalt";
 
@@ -27,5 +27,4 @@ class UserTest {
 
         assertEquals(newSalt, user.getSalt());
     }
-
 }

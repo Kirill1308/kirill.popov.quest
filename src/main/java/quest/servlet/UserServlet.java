@@ -31,13 +31,10 @@ public class UserServlet extends HttpServlet {
             if (!isNull(command)) {
                 command.execute(request, response);
             } else {
-                //response.sendRedirect("error.html");
-                throw new IllegalArgumentException("No such action: " + actionParam);
+                response.sendRedirect("error.html");
             }
         } catch (IllegalArgumentException e) {
-            //response.sendRedirect("error.html");
-            throw new IllegalArgumentException("No such action: " + actionParam);
-
+            response.sendRedirect("error.html");
         }
     }
 }

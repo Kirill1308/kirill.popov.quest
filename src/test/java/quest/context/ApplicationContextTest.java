@@ -11,39 +11,39 @@ import quest.service.QuizService;
 import quest.service.SecurityService;
 
 class ApplicationContextTest {
-  
-  @Test
-  void getInstanceOfQuizService() {
-      QuizService quizService = ApplicationContext.getInstanceOf(QuizService.class);
-      Assertions.assertNotNull(quizService, "QuizService should not be null");
-  }
 
-  @Test
-  void getInstanceOfQuestionRepository() {
-      QuestionRepository questionRepository = ApplicationContext.getInstanceOf(QuestionRepository.class);
-      Assertions.assertNotNull(questionRepository, "QuestionRepository should not be null");
-  }
+    @Test
+    void getInstanceOf_returnQuizService() {
+        QuizService quizService = ApplicationContext.getInstanceOf(QuizService.class);
+        Assertions.assertNotNull(quizService, "QuizService should not be null");
+    }
 
-  @Test
-  void getInstanceOfSecurityService() {
-      SecurityService securityService = ApplicationContext.getInstanceOf(SecurityService.class);
-      Assertions.assertNotNull(securityService, "SecurityService should not be null");
-  }
+    @Test
+    void getInstanceOf_returnQuestionRepository() {
+        QuestionRepository questionRepository = ApplicationContext.getInstanceOf(QuestionRepository.class);
+        Assertions.assertNotNull(questionRepository, "QuestionRepository should not be null");
+    }
 
-  @Test
-  void getInstanceOfUserRepository() {
-      UserRepository userRepository = ApplicationContext.getInstanceOf(UserRepositoryImpl.class);
-      Assertions.assertNotNull(userRepository, "UserRepository should not be null");
-  }
+    @Test
+    void getInstanceOf_returnSecurityService() {
+        SecurityService securityService = ApplicationContext.getInstanceOf(SecurityService.class);
+        Assertions.assertNotNull(securityService, "SecurityService should not be null");
+    }
 
-  @Test
-  void getInstanceOfAuthenticationHandler() {
-      AuthenticationHandler authenticationHandler = ApplicationContext.getInstanceOf(AuthenticationHandler.class);
-      Assertions.assertNotNull(authenticationHandler, "AuthenticationHandler should not be null");
-  }
+    @Test
+    void getInstanceOf_returnUserRepository() {
+        UserRepository userRepository = ApplicationContext.getInstanceOf(UserRepositoryImpl.class);
+        Assertions.assertNotNull(userRepository, "UserRepository should not be null");
+    }
 
-  @Test
-  void getInstanceOfNonExistentClass() {
-      Assertions.assertThrows(InstanceNotFoundException.class, () -> ApplicationContext.getInstanceOf(String.class), "Should Throw InstanceNotFoundException for non-existing class");
-  }
+    @Test
+    void getInstanceOf_returnAuthenticationHandler() {
+        AuthenticationHandler authenticationHandler = ApplicationContext.getInstanceOf(AuthenticationHandler.class);
+        Assertions.assertNotNull(authenticationHandler, "AuthenticationHandler should not be null");
+    }
+
+    @Test
+    void getInstanceOf_NonExistentClass_throwException() {
+        Assertions.assertThrows(InstanceNotFoundException.class, () -> ApplicationContext.getInstanceOf(String.class), "Should Throw InstanceNotFoundException for non-existing class");
+    }
 }

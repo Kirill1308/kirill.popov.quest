@@ -10,33 +10,27 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import quest.exception.JsonFileIOException;
 import quest.model.User;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class UserRepositoryImplTest {
-
     @Spy
     private UserRepositoryImpl userRepository;
     @Mock
     private User mockUser1;
-
     @Mock
     private User mockUser2;
     private final String validUsername = "john";
     private final String validPassword = "johnPassword";
-
 
     @BeforeEach
     void setUp() {
@@ -55,36 +49,32 @@ class UserRepositoryImplTest {
     }
 
     @Test
-    void testRegisterAndWriteUserToJson() {
-        String username = "user";
-        String password = "password";
-        String salt = "salt";
+    void registerAndWriteUserToJson_success() {
+        String username = "john";
+        String password = "12345";
+        String salt = "sample_salt";
+
         userRepository.registerAndWriteUserToJson(username, password, salt);
 
-        StringBuilder jsonContent = readJsonFileContent();
-
-        assertTrue(jsonContent.toString().contains(username));
-        assertTrue(jsonContent.toString().contains(password));
-        assertTrue(jsonContent.toString().contains(salt));
-    }
-
-    private StringBuilder readJsonFileContent() {
-        File jsonFile = new File("src/main/resources/users.json");
-        StringBuilder jsonContent = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new FileReader(jsonFile))) {
-            String sCurrentLine;
-            while ((sCurrentLine = br.readLine()) != null) {
-                jsonContent.append(sCurrentLine);
-            }
-
-        } catch (IOException e) {
-            throw new JsonFileIOException("Error reading file.", e);
-        }
-        return jsonContent;
+        List<User> users = userRepository.getUsers();
+        User lastUser = users.get(users.size() - 1);
+        assertEquals(username, lastUser.getUsername());
+        assertEquals(password, lastUser.getPassword());
+        assertEquals(salt, lastUser.getSalt());
     }
 
     @Test
-    void checkUser_with_valid_credentials_should_return_true() {
+    void registerAndWriteUserToJson_nullParameters_throwsJsonFileIOException() {
+        UserRepositoryImpl userRepository = new UserRepositoryImpl();
+
+        assertThrows(JsonFileIOException.class,
+                () -> userRepository.registerAndWriteUserToJson(null, null, null),
+                "Expected a JsonFileIOException to be thrown, but it didn't");
+
+    }
+
+    @Test
+    void checkUser_withValidCredentials_returnTrue() {
         when(userRepository.authenticateUser(validUsername, validPassword)).thenReturn(true);
 
         boolean result = userRepository.authenticateUser(validUsername, validPassword);
@@ -93,7 +83,7 @@ class UserRepositoryImplTest {
     }
 
     @Test
-    void checkUser_with_invalid_username_should_return_false() {
+    void checkUser_withInvalidUsername_returnFalse() {
         String invalidUsername = "invalidUser";
 
         when(userRepository.authenticateUser(invalidUsername, validPassword)).thenReturn(false);
@@ -103,7 +93,7 @@ class UserRepositoryImplTest {
     }
 
     @Test
-    void checkUser_with_invalid_password_should_return_false() {
+    void checkUser_withInvalidPassword_returnFalse() {
         String invalidPassword = "invalidPassword";
 
         when(userRepository.authenticateUser(validUsername, invalidPassword)).thenReturn(false);
@@ -113,34 +103,38 @@ class UserRepositoryImplTest {
     }
 
     @Test
-    void testAuthenticateUser_ValidCredentials() {
+    void authenticateUser_validCredentials_returnTrue() {
         assertTrue(userRepository.authenticateUser("user1", "password1"));
     }
 
     @Test
-    void testAuthenticateUser_InvalidUsername() {
+    void authenticateUser_invalidUsername_returnFalse() {
         assertFalse(userRepository.authenticateUser("invalidUser", "password1"));
     }
 
     @Test
-    void testAuthenticateUser_InvalidPassword() {
+    void authenticateUser_invalidPassword_returnFalse() {
         assertFalse(userRepository.authenticateUser("user1", "invalidPassword"));
     }
 
     @Test
-    void testAuthenticateUser_NullCredentials() {
+    void authenticateUser_nullCredentials_returnFalse() {
         assertFalse(userRepository.authenticateUser(null, null));
     }
 
     @Test
-    void testIsUsernameTaken() {
+    void isUsernameTaken_returnTrue() {
         assertTrue(userRepository.isUsernameTaken("user1"));
         assertTrue(userRepository.isUsernameTaken("user2"));
+    }
+
+    @Test
+    void isUsernameTaken_returnFalse() {
         assertFalse(userRepository.isUsernameTaken("user3"));
     }
 
     @Test
-    void testIsUsernameTaken_NullUsername() {
+    void isUsernameTaken_nullUsername_returnFalse() {
         assertFalse(userRepository.isUsernameTaken(null));
     }
 
@@ -150,7 +144,7 @@ class UserRepositoryImplTest {
     }
 
     @Test
-    void testGetSaltByUsername_NullUsername() {
+    void getSaltByUsername_mullUsername_returnNull() {
         assertNull(userRepository.getSaltByUsername(null));
     }
 }

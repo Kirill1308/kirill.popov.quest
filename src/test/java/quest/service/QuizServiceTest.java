@@ -3,12 +3,12 @@ package quest.service;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import quest.model.Option;
@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.eq;
@@ -33,7 +34,6 @@ import static org.mockito.Mockito.when;
 class QuizServiceTest {
     @Mock
     private QuestionRepository mockQuestionRepository;
-    private QuizService mockQuizService;
     @Mock
     private Question mockQuestion;
     @Mock
@@ -48,6 +48,8 @@ class QuizServiceTest {
     private HttpSession mockSession;
     @Mock
     private RequestDispatcher mockDispatcher;
+    @InjectMocks
+    private QuizService mockQuizService;
 
     @BeforeEach
     void setUp() {
@@ -55,7 +57,7 @@ class QuizServiceTest {
     }
 
     @Test
-    void setSessionAttributes() {
+    void setSessionAttributes_success() {
         when(mockContext.getSession()).thenReturn(mockSession);
         when(mockQuestionRepository.getQuestions()).thenReturn(List.of(mockQuestion, mockQuestion, mockQuestion));
 
@@ -66,7 +68,7 @@ class QuizServiceTest {
     }
 
     @Test
-    void setQuestionAttributes() {
+    void setQuestionAttributes_success() {
         Option[] mockOptions = {mockOption, mockOption};
 
         when(mockQuestion.getOptions()).thenReturn(mockOptions);
@@ -80,7 +82,7 @@ class QuizServiceTest {
     }
 
     @Test
-    void retrieveQuestion_withQuestionIdInSession_returnsQuestion() {
+    void retrieveQuestion_withQuestionIdInSession_returnQuestion() {
         Integer exampleQuestionId = 5;
         when(mockQuestionRepository.retrieveQuestion(exampleQuestionId)).thenReturn(Optional.of(mockQuestion));
         when(mockContext.getSession()).thenReturn(mockSession);
@@ -88,7 +90,7 @@ class QuizServiceTest {
 
         Optional<Question> result = mockQuizService.retrieveQuestion(mockContext);
 
-        Assertions.assertTrue(result.isPresent());
+        assertTrue(result.isPresent());
         assertEquals(mockQuestion, result.get());
     }
 
@@ -99,11 +101,11 @@ class QuizServiceTest {
 
         Optional<Question> result = mockQuizService.retrieveQuestion(mockContext);
 
-        Assertions.assertTrue(result.isEmpty());
+        assertTrue(result.isEmpty());
     }
 
     @Test
-    void handleAnswerCorrect() throws Exception {
+    void handleAnswer_correctAnswer() throws Exception {
         RequestHandlerContext context = new RequestHandlerContext(mockRequest, mockResponse, mockSession);
 
         when(mockSession.getAttribute(anyString())).thenReturn(0);
@@ -117,13 +119,13 @@ class QuizServiceTest {
     }
 
     @Test
-    void testHandleAnswerCorrectAnswerAndNextQuestionPresent() throws Exception {
+    void handleAnswer_whenCorrectAnswerAndNextQuestionPresent() throws Exception {
         when(mockSession.getAttribute(anyString())).thenReturn(0);
         when(mockRequest.getRequestDispatcher(anyString())).thenReturn(mockDispatcher);
         int questionId = 1;
         RequestHandlerContext mockContext = spy(new RequestHandlerContext(mockRequest, mockResponse, mockSession));
         mockContext.setQuestionId(questionId);
-        Question nextQuestion = new Question(2, "questionText", new Option[] {}, "answer");
+        Question nextQuestion = new Question(2, "questionText", new Option[]{}, "answer");
 
         when(mockQuestionRepository.findNextQuestion(questionId)).thenReturn(Optional.of(nextQuestion));
 
@@ -135,7 +137,7 @@ class QuizServiceTest {
     }
 
     @Test
-    void handleAnswerIncorrect() throws Exception {
+    void handleAnswer_incorrectAnswer() throws Exception {
         RequestHandlerContext context = new RequestHandlerContext(mockRequest, mockResponse, mockSession);
 
         when(mockRequest.getRequestDispatcher(anyString())).thenReturn(mockDispatcher);

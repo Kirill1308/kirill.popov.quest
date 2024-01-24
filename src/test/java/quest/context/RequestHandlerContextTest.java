@@ -27,7 +27,7 @@ class RequestHandlerContextTest {
     private HttpSession mockSession;
 
     @Test
-    void requestHandlerContext_ConstructorAndGetters() {
+    void requestHandlerContext_constructorAndGetters() {
         when(mockSession.getAttribute(CURRENT_QUESTION_ID_ATTRIBUTE)).thenReturn(42);
 
         RequestHandlerContext context = new RequestHandlerContext(mockRequest, mockResponse, mockSession);
@@ -39,7 +39,7 @@ class RequestHandlerContextTest {
     }
 
     @Test
-    void constructor_WithNullQuestionIdAttribute() {
+    void requestHandlerContext_constructor_nullQuestionIdAttribute() {
         when(mockSession.getAttribute(CURRENT_QUESTION_ID_ATTRIBUTE)).thenReturn(null);
 
         RequestHandlerContext context = new RequestHandlerContext(mockRequest, mockResponse, mockSession);
