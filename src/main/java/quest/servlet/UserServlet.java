@@ -9,12 +9,12 @@ import lombok.extern.log4j.Log4j2;
 import quest.command.ActionCommand;
 import quest.command.UserAction;
 import quest.context.ApplicationContext;
+import quest.exception.CommandNotFoundException;
 
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Map;
-
-import static java.util.Objects.isNull;
+import java.util.Optional;
 
 @Log4j2
 @WebServlet("/user")
@@ -24,17 +24,15 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String actionParam = request.getParameter("action");
+
         try {
             UserAction action = UserAction.valueOf(actionParam.toUpperCase(Locale.ENGLISH));
-            ActionCommand command = actionCommands.get(action);
+            ActionCommand command = Optional.ofNullable(actionCommands.get(action))
+                    .orElseThrow(() -> new CommandNotFoundException("Command not found"));
 
-            if (!isNull(command)) {
-                command.execute(request, response);
-            } else {
-                response.sendRedirect("error.html");
-            }
+            command.execute(request, response);
         } catch (IllegalArgumentException e) {
-            response.sendRedirect("error.html");
+            throw new CommandNotFoundException("Command not found", e);
         }
     }
 }

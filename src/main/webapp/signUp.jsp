@@ -20,9 +20,6 @@
             <label for="registerPassword">Password:</label>
             <input type="password" id="registerPassword" name="registerPassword" required>
 
-<%--            <label for="registerPasswordConfirm">Confirm Password:</label>
-            <input type="password" id="registerPasswordConfirm" name="registerPasswordConfirm" required>--%>
-
             <button type="submit">Sign Up</button>
 
             <%if (request.getAttribute("errorMessage") != null) {%>
