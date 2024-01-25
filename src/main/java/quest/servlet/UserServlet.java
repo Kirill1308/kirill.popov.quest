@@ -29,8 +29,7 @@ public class UserServlet extends HttpServlet {
             UserAction action = UserAction.valueOf(actionParam.toUpperCase(Locale.ENGLISH));
             ActionCommand command = Optional.ofNullable(actionCommands.get(action))
                     .orElseThrow(() -> new CommandNotFoundException("Command not found"));
-
-
+            
             command.execute(request, response);
         } catch (IllegalArgumentException e) {
             throw new CommandNotFoundException("Command not found", e);
