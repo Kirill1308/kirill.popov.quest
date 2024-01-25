@@ -30,6 +30,7 @@ public class UserServlet extends HttpServlet {
             ActionCommand command = Optional.ofNullable(actionCommands.get(action))
                     .orElseThrow(() -> new CommandNotFoundException("Command not found"));
 
+
             command.execute(request, response);
         } catch (IllegalArgumentException e) {
             throw new CommandNotFoundException("Command not found", e);
