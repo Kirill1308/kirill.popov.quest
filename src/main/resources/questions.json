@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "text": "You wake up in a cryo chamber and realize you've lost your memory. Your action:",
+    "answer": "Agree with the ship's security service, offering to help you restore your memory?",
+    "options": [
+      {
+        "text": "Agree with the ship's security service, offering to help you restore your memory?"
+      },
+      {
+        "text": "Decline assistance and decide to investigate your situation independently?"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "text": "Memory recovery path choice:",
+    "answer": "Choose the electrostimulation procedure for rapid memory recovery?",
+    "options": [
+      {
+        "text": "Choose the electrostimulation procedure for rapid memory recovery?"
+      },
+      {
+        "text": "Choose a virtual reality program that allows you to gradually uncover details of the past?"
+      }
+    ]
+  }
+]
